@@ -1,4 +1,4 @@
-package net.javaguides.springboot.springsecurity.constraint;
+package inquerro.constraint;
 
 import javax.validation.Payload;
 import javax.validation.Constraint;

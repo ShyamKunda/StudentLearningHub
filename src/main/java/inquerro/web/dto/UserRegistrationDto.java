@@ -1,10 +1,10 @@
-package net.javaguides.springboot.springsecurity.web.dto;
+package inquerro.web.dto;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-import net.javaguides.springboot.springsecurity.constraint.FieldMatch;
+import inquerro.constraint.FieldMatch;
 
 @FieldMatch.List({
         @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match"),

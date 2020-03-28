@@ -1,7 +1,10 @@
-package net.javaguides.springboot.springsecurity.web;
+package inquerro.web;
 
 import javax.validation.Valid;
 
+import inquerro.model.User;
+import inquerro.service.UserService;
+import inquerro.web.dto.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import net.javaguides.springboot.springsecurity.model.User;
-import net.javaguides.springboot.springsecurity.service.UserService;
-import net.javaguides.springboot.springsecurity.web.dto.UserRegistrationDto;
 
 @Controller
 @RequestMapping("/registration")

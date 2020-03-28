@@ -1,9 +1,9 @@
-package net.javaguides.springboot.springsecurity.service;
+package inquerro.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import net.javaguides.springboot.springsecurity.model.User;
-import net.javaguides.springboot.springsecurity.web.dto.UserRegistrationDto;
+import inquerro.model.User;
+import inquerro.web.dto.UserRegistrationDto;
 
 public interface UserService extends UserDetailsService {
 

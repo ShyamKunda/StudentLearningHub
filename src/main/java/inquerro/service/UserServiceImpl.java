@@ -1,4 +1,4 @@
-package net.javaguides.springboot.springsecurity.service;
+package inquerro.service;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,10 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import net.javaguides.springboot.springsecurity.model.Role;
-import net.javaguides.springboot.springsecurity.model.User;
-import net.javaguides.springboot.springsecurity.repository.UserRepository;
-import net.javaguides.springboot.springsecurity.web.dto.UserRegistrationDto;
+import inquerro.model.Role;
+import inquerro.model.User;
+import inquerro.repository.UserRepository;
+import inquerro.web.dto.UserRegistrationDto;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(registration.getLastName());
         user.setEmail(registration.getEmail());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
-        user.setRoles(Arrays.asList(new Role("ROLE_USER"),new Role("ROLE_Manager")));
+        user.setRoles(Arrays.asList(new Role("ROLE_USER"),new Role("ROLE_MANAGER")));
         return userRepository.save(user);
     }
 

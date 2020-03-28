@@ -1,4 +1,4 @@
-package net.javaguides.springboot.springsecurity.model;
+package inquerro.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
