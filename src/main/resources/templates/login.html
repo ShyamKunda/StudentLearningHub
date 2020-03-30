@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="utf-8"/>
     <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
@@ -16,6 +17,16 @@
         <a class="navbar-brand text-light" href="#">
             LearnHacks
         </a>
+        <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Logout</a>
+
+        </li>
+
+
+
+
+
+
     </nav>
 
 
@@ -40,7 +51,7 @@
                     <h5 class="card-title">Tests Available</h5>
                     <p class="card-text">Click below buttons to view subtopics</p>
                     <p>
-                        <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-primary"
+                        <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-dark"
                                 data-target="#collapseExample" data-toggle="collapse" type="button">
                             Electonics and Communication
                             <span class="badge badge-light">100 Tests</span>
@@ -90,7 +101,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-6 col-sm-offset-3">
-                                    <input class="form-control btn btn-primary" id="login-submit" name="login-submit"
+                                    <input class="form-control btn btn-dark" id="login-submit" name="login-submit"
                                            type="submit" value="Log In"/>
                                 </div>
                             </div>

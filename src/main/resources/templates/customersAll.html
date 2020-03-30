@@ -11,10 +11,11 @@
 
 
     <title>LearnHacks</title>
-    <script src="https://kit.fontawesome.com/8a02b9f577.js" crossorigin="anonymous"></script>
+<!--    <script src="https://kit.fontawesome.com/8a02b9f577.js" crossorigin="anonymous"></script>-->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+            src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+    </script>
 
 </head>
 
@@ -31,7 +32,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">ECE</li>
+                <li class="breadcrumb-item"><a href="index.html">ECE</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Digital Electronics</li>
             </ol>
         </nav>
     </p>
@@ -40,9 +42,34 @@
         <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
              aria-valuemax="100">25%</div>
     </div>
+
+    <div><p>
+        When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
+        \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]
+    </p></div>
+
     </p>
+    <div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
     <div class="card">
-        <h5 class="card-header">Featured</h5>
+        <h5 class="card-header">Digital Electronics</h5>
 
         <div class="container">
 
@@ -69,7 +96,7 @@
                             Show Answer
                         </button>
                     </p>
-                    <div class="collapse" id="collapseExample${produto.index}">
+                    <div class="collapse" id="collapseExample">
                         <div class="card card-body" th:text="${produto.explanation}">
                         </div>
 <!--                        <div><p>-->
@@ -104,6 +131,8 @@
         th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
 <script type="text/javascript"
         th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+<script src="js/like-dislike.js"></script>
+
 <a href="https://icons8.com/icon/119151/facebook-like">Facebook Like icon by Icons8</a>
 
 </body>

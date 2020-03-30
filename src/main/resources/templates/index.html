@@ -22,27 +22,163 @@
 
 		<div class="col" sec:authorize="hasRole('ROLE_USER')">
 			<form action="#" th:action="@{/getQuestionPage}" method="get">
-				<button type="submit"  value="Logout" class="btn btn-primary">Upload question</button>
+				<button type="submit"  value="Logout" class="btn btn-light">Upload question</button>
 			</form>
 		</div>
+
+		<div sec:authorize="isAuthenticated()"  class="dropdown pmd-dropdown pmd-user-info ml-auto">
+			<button href="javascript:void(0);" class="btn-user dropdown-toggle media align-items-center bg-light" data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
+<!--				<img class="mr-2" src="https://pro.propeller.in/assets/images/avatar-icon-40x40.png" width="40" height="40" alt="avatar">-->
+				<div class="media-body">
+					<span  sec:authentication="principal.username">User</span>
+				</div>
+				<i class="material-icons md-light ml-2 pmd-sm"></i>
+			</button>
+			<ul class="dropdown-menu dropdown-menu-right" role="menu">
+				<li class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/getQuestionPage}">Edit Profile</a></li>
+				<li class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/getQuestionPage}">Upload Questions</a></li>
+				<li class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+			</ul>
+		</div>
+
 	</nav>
 
+	<p>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="/">home</a></li>
+				<li class="breadcrumb-item active" aria-current="page">All Topics</li>
+			</ol>
+		</nav>
+	</p>
 
 </div>
 	<div class="container">
-		<h2>User Registration and Login Module using Spring Boot, Spring
-			MVC, Spring Security, JPA/Hibernate and Thymeleaf</h2>
-
-		<p>
-			Welcome <span sec:authentication="principal.username">User</span>
-			Roles: <span sec:authentication="principal.authorities">[ROLE_USER]</span>
-		</p>
+<!--		<p>-->
+<!--			Welcome <span sec:authentication="principal.username">User</span>-->
+<!--			Roles: <span sec:authentication="principal.authorities">[ROLE_USER]</span>-->
+<!--		</p>-->
 	</div>
+
+	<div class="container">
+
+	<div class="row justify-content-between">
+		<div class="col-8">
+
+			<div class="card">
+				<div class="card-header">
+					Lessons and Question
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">Tests Available</h5>
+					<p class="card-text">Click below buttons to view subtopics</p>
+					<!--Single Block-->
+					<div>
+					<p>
+						<button aria-controls="collapseExample" aria-expanded="false" class="btn btn-dark"
+								data-target="#collapseExample" data-toggle="collapse" type="button">
+							Electonics and Communication
+							<span class="badge badge-light">100 Tests</span>
+						</button>
+					</p>
+					<div class="collapse" id="collapseExample">
+						<div class="progress">
+							<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar bg-success"
+								 role="progressbar" style="width: 25%;">25%
+							</div>
+						</div>
+						<div class="card card-body">
+							<div class="row">
+								<div class="col-8">
+							<div class="list-group">
+								<form  th:action="@{/listStudentsAall}" method="get">
+								<button type="submit" class="list-group-item list-group-item-action">Digital Electronics
+									<span class="badge badge-light">20 Tests</span></button>
+								</form>
+								<form  th:action="@{/listStudentsAall}" method="get">
+									<button type="submit" class="list-group-item list-group-item-action">Analogue Electronics
+										<span class="badge badge-dark">20 Tests</span></button>
+								</form>
+								<form  th:action="@{/listStudentsAall}" method="get">
+									<button type="submit" class="list-group-item list-group-item-action">Control systems
+										<span class="badge badge-light">20 Tests</span></button>
+								</form>
+								<form  th:action="@{/listStudentsAall}" method="get">
+									<button type="submit" class="list-group-item list-group-item-action">EMT
+										<span class="badge badge-light">20 Tests</span></button>
+								</form>
+							</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+					<!--End of  Block-->
+					<!--Single Block-->
+					<div>
+						<p>
+							<button aria-controls="collapseExample" aria-expanded="false" class="btn btn-dark"
+									data-target="#collapseExample" data-toggle="collapse" type="button">
+								Computer Science and Engineering
+								<span class="badge badge-light">100 Tests</span>
+							</button>
+						</p>
+						<div class="collapse" id="collapseExample1">
+							<div class="progress">
+								<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar bg-success"
+									 role="progressbar" style="width: 25%;">25%
+								</div>
+							</div>
+							<div class="card card-body">
+								<div class="row">
+									<div class="col-8">
+										<div class="list-group">
+											<form  th:action="@{/listStudentsAall}" method="get">
+												<button type="submit" class="list-group-item list-group-item-action">Digital Electronics
+													<span class="badge badge-dark">20 Tests</span></button>
+											</form>
+											<form  th:action="@{/listStudentsAall}" method="get">
+												<button type="submit" class="list-group-item list-group-item-action">Analogue Electronics
+													<span class="badge badge-dark">17 Tests</span></button>
+											</form>
+											<form  th:action="@{/listStudentsAall}" method="get">
+												<button type="submit" class="list-group-item list-group-item-action">Control systems
+													<span class="badge badge-dark">28 Tests</span></button>
+											</form>
+											<form  th:action="@{/listStudentsAall}" method="get">
+												<button type="submit" class="list-group-item list-group-item-action">EMT
+													<span class="badge badge-dark">42 Tests</span></button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--End of  Block-->
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+
+</div>
 
 	<script type="text/javascript"
 		th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
 	<script type="text/javascript"
 		th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+
+	<script>
+
+		$("list-home-list").click(function(){
+			$.get("listStudentsAall", function(data, status){
+				alert("Data: " + data + "\nStatus: " + status);
+			});
+		});
+	</script>
 
 </body>
 </html>

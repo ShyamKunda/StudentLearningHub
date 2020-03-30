@@ -74,15 +74,24 @@ public class QuestionService {
             ObjectMapper mapper = new ObjectMapper();
             String options = mapper.writeValueAsString(userData.get("options"));
             //OptionsClass[] optionsClass = mapper.readValue(options,OptionsClass[].class);
-            String[] optionsArray = options.split(",");
+            System.out.println("******************");
+            System.out.println(options);
+            System.out.println("******************");
+            String[] optionsArray = options.split("\",");
+            System.out.println("******************");
+            System.out.println(options);
+            System.out.println("******************");
             List<String> optionsList = new ArrayList<>();
             for(String a : optionsArray){
-                Pattern p = Pattern.compile("\\d+");
-                Matcher m = p.matcher(a);
-                while(m.find()) {
-                    System.out.println(m.group());
-                    optionsList.add(m.group());
+
+                a = a.replaceFirst("\\[\"","");
+                a = a.replaceFirst("\"\\]","");
+                a = a.replaceFirst("\"","");
+                if (a.lastIndexOf("\"") == a.length()){
+                    a = a.substring(0,a.indexOf(a.length()-1));
                 }
+                optionsList.add(a);
+
 
             }
 
