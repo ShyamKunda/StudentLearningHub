@@ -70,32 +70,8 @@ public class QuestionService {
 
             System.out.println(document.getData().values());
             Map<String, Object> userData= document.getData();
-            System.out.println(document.getData());
-            ObjectMapper mapper = new ObjectMapper();
-            String options = mapper.writeValueAsString(userData.get("options"));
-            //OptionsClass[] optionsClass = mapper.readValue(options,OptionsClass[].class);
-            System.out.println("******************");
-            System.out.println(options);
-            System.out.println("******************");
-            String[] optionsArray = options.split("\",");
-            System.out.println("******************");
-            System.out.println(options);
-            System.out.println("******************");
-            List<String> optionsList = new ArrayList<>();
-            for(String a : optionsArray){
 
-                a = a.replaceFirst("\\[\"","");
-                a = a.replaceFirst("\"\\]","");
-                a = a.replaceFirst("\"","");
-                if (a.lastIndexOf("\"") == a.length()){
-                    a = a.substring(0,a.indexOf(a.length()-1));
-                }
-                optionsList.add(a);
-
-
-            }
-
-
+            List<String> optionsList = (List<String>) userData.get("options");
 
             Question question = Question.builder()
                     .content(userData.get("content").toString())
