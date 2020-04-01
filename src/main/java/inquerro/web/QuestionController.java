@@ -49,7 +49,7 @@ public class QuestionController {
     public ModelAndView createQuestion(Map<String, Object> model) {
 
         model.put("number", 1234);
-        model.put("message", "Hello from Spring MVC");
+        model.put("equation", "View equation here");
         return new ModelAndView("uploadQuestion");
 
     }

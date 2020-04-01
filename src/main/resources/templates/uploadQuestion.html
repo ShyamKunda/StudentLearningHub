@@ -13,7 +13,7 @@
     <title>LearnHacks</title>
     <script src="https://kit.fontawesome.com/8a02b9f577.js" crossorigin="anonymous"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.css"/>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.min.js"></script>
     <script id="MathJax-script" async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -27,8 +27,8 @@
 <div class="container">
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="index.html">
-<!--            <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30"-->
-<!--                 class="d-inline-block align-top" alt="">-->
+            <!--            <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30"-->
+            <!--                 class="d-inline-block align-top" alt="">-->
             LearnHacks
         </a>
     </nav>
@@ -46,82 +46,136 @@
 
 
         <div class="card-body">
-            <form action="#" th:action="@{/postQuestion}" th:object="${question}" method="post">
-                <div class="form-group">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon3">Question</span>
-                        </div>
-                        <textarea type="text" class="form-control" id="question" name="content" rows="4"
-                                  aria-describedby="basic-addon3"></textarea>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon3">Option 1</span>
-                        </div>
-                        <textarea type="text" class="form-control" id="option1" name="option1" rows="2"
-                                  aria-describedby="basic-addon3"></textarea>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon3">Option 2</span>
-                        </div>
-                        <textarea type="text" class="form-control" id="option2" name="option2" rows="2"
-                                  aria-describedby="basic-addon3"></textarea>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon3">Option 3</span>
-                        </div>
-                        <textarea type="text" class="form-control" id="option3" name="option3" rows="2"
-                                  aria-describedby="basic-addon3"></textarea>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon3">Option 4</span>
-                        </div>
-                        <textarea type="text" class="form-control" id="option4" name="option4" rows="2"
-                                  aria-describedby="basic-addon3"></textarea>
-                    </div>
+            <p>
+                <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#mathJaxGuide"
+                        aria-expanded="false" aria-controls="mathJaxGuide">MathJax guide to write Mathematical equations
+                </button>
+                <div class="row">
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="mathJaxGuide">
+                            <div class="card card-body">
+                                <a class="btn btn-light" target="_blank"
+                                   href="https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference"
+                                   role="button">MathJax basic tutorial and quick reference</a>
 
-                    <label>Enter Correct Answer</label>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="answer" id="inlineRadio1" value="option1">
-                        <label class="form-check-label" for="inlineRadio1">1</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="answer" id="inlineRadio2" value="option2">
-                        <label class="form-check-label" for="inlineRadio2">2</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="answer" id="inlineRadio3" value="option3">
-                        <label class="form-check-label" for="inlineRadio3">3</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="answer" id="inlineRadio4" value="option4">
-                        <label class="form-check-label" for="inlineRadio4">4</label>
-                    </div>
+                            </div>
+                            <div class="card card-body">
+                                <!--start of card-->
 
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Explaination</span>
-                        </div>
-                        <textarea type="text" class="form-control" id="explanation" name="explanation" rows="3"
-                                  aria-describedby="basic-addon3"></textarea>
-                    </div>
 
-                    <h2>Enter tags/ Catagories</h2>
-                    <textarea name='tags2' placeholder='tags'>Engineering</textarea>
-
-                    <div>
-                        <p>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </p>
-                    </div>
+                                <form action="#" th:action="@{/postContent}" th:object="${mathJaxData}" method="post">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="mathJaxValidationInput">Equations validation</span>
+                                                </div>
+                                                <textarea type="text" class="form-control" id="mathJaxValidation"
+                                                          name="data" rows="3"
+                                                          aria-describedby="mathJaxValidation"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+            <p>
+                <button class="btn btn-dark" type="submit" aria-expanded="false" aria-controls="viewEquation">
+                    Button with data-target
+                </button>
+            </p>
+            <div id="viewEquation">
+                <div class="card card-body" th:text="${equation}"> Equation
                 </div>
-            </form>
+            </div>
         </div>
     </div>
+    </form>
+
+
+    <!--                            end of card-->
+
+</div>
+
+</div>
+</div>
+</div>
+</p>
+
+
+<form action="#" th:action="@{/postQuestion}" th:object="${question}" method="post">
+    <div class="form-group">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Question</span>
+            </div>
+            <textarea type="text" class="form-control" id="question" name="content" rows="4"
+                      aria-describedby="basic-addon3"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Option 1</span>
+            </div>
+            <textarea type="text" class="form-control" id="option1" name="option1" rows="2"
+                      aria-describedby="basic-addon3"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Option 2</span>
+            </div>
+            <textarea type="text" class="form-control" id="option2" name="option2" rows="2"
+                      aria-describedby="basic-addon3"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Option 3</span>
+            </div>
+            <textarea type="text" class="form-control" id="option3" name="option3" rows="2"
+                      aria-describedby="basic-addon3"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Option 4</span>
+            </div>
+            <textarea type="text" class="form-control" id="option4" name="option4" rows="2"
+                      aria-describedby="basic-addon3"></textarea>
+        </div>
+
+        <label>Enter Correct Answer</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="answer" id="inlineRadio1" value="option1">
+            <label class="form-check-label" for="inlineRadio1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="answer" id="inlineRadio2" value="option2">
+            <label class="form-check-label" for="inlineRadio2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="answer" id="inlineRadio3" value="option3">
+            <label class="form-check-label" for="inlineRadio3">3</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="answer" id="inlineRadio4" value="option4">
+            <label class="form-check-label" for="inlineRadio4">4</label>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Explaination</span>
+            </div>
+            <textarea type="text" class="form-control" id="explanation" name="explanation" rows="3"
+                      aria-describedby="basic-addon3"></textarea>
+        </div>
+
+        <h2>Enter tags/ Catagories</h2>
+        <textarea name='tags2' placeholder='tags'>Engineering</textarea>
+
+        <div>
+            <p>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </p>
+        </div>
+    </div>
+</form>
+
+</div>
 
 
 </div>
@@ -129,20 +183,20 @@
 <script>
     var number = [[${number}]];
     var message = "[[${message}]]";
-    console.log("Numbeer+ " +  number);
-    console.log("message+ " +  message);
+    console.log("Numbeer+ " + number);
+    console.log("message+ " + message);
 
 
     var input1 = document.querySelector('input[name=tags]'),
         input2 = document.querySelector('textarea[name=tags2]'),
         // init Tagify script on the above inputs
         tagify2 = new Tagify(input2, {
-            enforeWhitelist : true,
-            whitelist       : ["Engineering", "ECE", "CSE", "Mechanical", "Gate", "ISRO"]
+            enforeWhitelist: true,
+            whitelist: ["Engineering", "ECE", "CSE", "Mechanical", "Gate", "ISRO"]
         });
 
     // toggle Tagify on/off
-    document.querySelector('input[type=checkbox]').addEventListener('change', function(){
+    document.querySelector('input[type=checkbox]').addEventListener('change', function () {
         document.body.classList[this.checked ? 'add' : 'remove']('disabled');
     })
 </script>
