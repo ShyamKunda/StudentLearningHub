@@ -1,5 +1,9 @@
-# registration-login-springboot-security-thymeleaf
-registration-login-module using springboot, spring mvc, spring security and thymeleaf
-
-http://www.javaguides.net/2018/10/user-registration-module-using-springboot-springmvc-springsecurity-hibernate5-thymeleaf-mysql.html
-
+# Student Learninng Hub 
+These are main goals
+1. Mainly focused on Engineering students.
+2. Lessons and Questions model to accelerate learning
+3. Tech Stack
+	- Spring boot
+	- Spring security (mySQL)
+	- Thymeleaf and Bootstrap for UI
+	- FireStore Database
