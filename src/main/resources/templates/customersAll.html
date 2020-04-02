@@ -38,8 +38,8 @@
         </nav>
     </p>
     <p>
-    <div class="progress">
-        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
+    <div class="progress bg-dark">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
              aria-valuemax="100">25%</div>
     </div>
     </p>
@@ -69,31 +69,31 @@
 
             <div class="card-body">
                 <ol>
-                <div th:each="produto : ${customersAll}"    >
+                <div th:each="produto,produtoStat : ${customersAll}"    >
 
                         <li>
                     <h6 class="card-title"  th:text="${produto.content}" ></h6>
                     <p>
                         <form action="/action_page.php">
                     <p>
-                    <div class="form-check" th:each="options : ${produto.options}">
-                        <label class="form-check-label" for="radio${options.index}">
-                            <input type="radio" class="form-check-input" id="radio${options.index}" name="optradio"
+                    <div class="form-check" th:each="options,custStat : ${produto.options}">
+                        <label class="form-check-label" th:for="'radio' + ${custStat.index}">
+                            <input type="radio" class="form-check-input" th:id="'radio' + ${custStat.index}" name="optradio"
                                    th:value="${options}"   th:text="${options}" >
                         </label>
                     </div>
                     </p>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-dark">Submit</button>
                     <img src="https://img.icons8.com/cute-clipart/64/000000/facebook-like.png"/>
                     </form>
                     </p>
                     <p>
-                        <button class="btn btn-primary" type="button" data-toggle="collapse"
-                                data-target="#collapseExample${produto.index}" aria-expanded="false" aria-controls="collapseExample">
+                        <button class="btn btn-info" type="button" data-toggle="collapse"
+                                th:data-target="'#collapseExample' + ${produtoStat.index}" aria-expanded="false" th:aria-controls="'collapseExample' + ${produtoStat.index}">
                             Show Answer
                         </button>
                     </p>
-                    <div class="collapse" id="collapseExample">
+                    <div class="collapse" th:id="'collapseExample'+ ${produtoStat.index}">
                         <div class="card card-body" th:text="${produto.explanation}">
                         </div>
 <!--                        <div><p>-->
