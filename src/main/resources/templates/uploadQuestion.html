@@ -98,7 +98,6 @@
                                                           type="text"></textarea>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="row">
                                         <div class="col-4">
@@ -112,20 +111,20 @@
                                             </div>
                                         </div>
                                     </div>
-    </form>
+                                </form>
 
 
     <!--                            end of card-->
 
-</div>
+                            </div>
 
-</div>
-</div>
-</div>
-</p>
+                        </div>
+                    </div>
+                </div>
+            </p>
 
 
-<form action="#" method="post" th:action="@{/postQuestion}" th:object="${question}">
+            <form action="#" method="post" th:action="@{/postQuestion}" th:object="${question}">
     <div class="form-group">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -136,28 +135,28 @@
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon3">Option 1</span>
+                <span class="input-group-text" >Option 1</span>
             </div>
             <textarea aria-describedby="basic-addon3" class="form-control" id="option1" name="option1"
                       rows="2" type="text"></textarea>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon3">Option 2</span>
+                <span class="input-group-text">Option 2</span>
             </div>
             <textarea aria-describedby="basic-addon3" class="form-control" id="option2" name="option2"
                       rows="2" type="text"></textarea>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon3">Option 3</span>
+                <span class="input-group-text">Option 3</span>
             </div>
             <textarea aria-describedby="basic-addon3" class="form-control" id="option3" name="option3"
                       rows="2" type="text"></textarea>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon3">Option 4</span>
+                <span class="input-group-text">Option 4</span>
             </div>
             <textarea aria-describedby="basic-addon3" class="form-control" id="option4" name="option4"
                       rows="2" type="text"></textarea>
@@ -204,11 +203,11 @@
     </div>
 </form>
 
+        </div>
+
+
+    </div>
 </div>
-
-
-</div>
-
 <script>
 
     var input1 = document.querySelector('input[name=tags]'),

@@ -23,7 +23,7 @@
 
 <body>
 <div class="container">
-    <	<nav class="navbar navbar-light bg-dark">
+    <nav class="navbar navbar-light bg-dark">
     <a class="navbar-brand text-light" href="#">
         LearnHacks
     </a>
@@ -54,15 +54,15 @@
     <p>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="index.html">ECE</a></li>
+                <li class="breadcrumb-item"><a class="text-info" href="/">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-info" href="index.html">ECE</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Digital Electronics</li>
             </ol>
         </nav>
     </p>
     <p>
     <div class="progress bg-dark">
-        <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
+        <div class="progress-bar bg-info" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
              aria-valuemax="100">25%</div>
     </div>
     </p>
@@ -70,15 +70,19 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                    <a class="page-link text-info" href="#" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                    <a class="page-link text-info" href="#">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link text-info" th:href="@{/listStudentsAall}">2</a>
+                </li>
+                <li class="page-item"><a class="page-link text-info" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link text-info" href="#" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
@@ -107,7 +111,7 @@
                     </div>
                     </p>
                     <button type="submit" class="btn btn-dark">Submit</button>
-                    <img src="https://img.icons8.com/cute-clipart/64/000000/facebook-like.png"/>
+<!--                    <img src="https://img.icons8.com/cute-clipart/64/000000/facebook-like.png"/>-->
                     </form>
                     </p>
                     <p>
@@ -136,8 +140,6 @@
     </div>
 </div>
 <div>
-
-    <ion-icon name="heart-dislike-circle-outline"></ion-icon>
 </div>
 
 
@@ -153,9 +155,6 @@
         th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
 <script type="text/javascript"
         th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
-<script src="js/like-dislike.js"></script>
-
-<a href="https://icons8.com/icon/119151/facebook-like">Facebook Like icon by Icons8</a>
 
 </body>
 </html>

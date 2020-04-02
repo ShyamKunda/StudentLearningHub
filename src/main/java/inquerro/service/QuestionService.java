@@ -4,6 +4,7 @@ package inquerro.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -62,6 +63,18 @@ public class QuestionService {
     public List<Question> getAllQuestions() throws ExecutionException, InterruptedException, IOException {
 
         Firestore firestore = FirestoreClient.getFirestore();
+
+        CollectionReference collectionReference = firestore.collection("Questions");
+        ApiFuture<QuerySnapshot> futureWithCondition = collectionReference.whereGreaterThanOrEqualTo("id", 4).get();
+
+        List<QueryDocumentSnapshot> documents1 = futureWithCondition.get().getDocuments();
+        System.out.println("***********************************");
+        System.out.println(documents1.toArray().toString());
+        for (QueryDocumentSnapshot document : documents1) {
+
+            System.out.println(document.get("id"));
+        }
+        System.out.println("***********************************");
 
         ApiFuture<QuerySnapshot> future = firestore.collection("Questions").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
