@@ -68,7 +68,10 @@
         <div class="container">
 
             <div class="card-body">
+                <ol>
                 <div th:each="produto : ${customersAll}"    >
+
+                        <li>
                     <h6 class="card-title"  th:text="${produto.content}" ></h6>
                     <p>
                         <form action="/action_page.php">
@@ -98,8 +101,10 @@
 <!--                            \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]s-->
 <!--                        </p></div>-->
                     </div>
-                </div>
+                        </li>
 
+                </div>
+                </ol>
             </div>
 
         </div>

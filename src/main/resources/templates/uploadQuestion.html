@@ -1,22 +1,22 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
 
 
     <title>LearnHacks</title>
-    <script src="https://kit.fontawesome.com/8a02b9f577.js" crossorigin="anonymous"></script>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/8a02b9f577.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.min.js"></script>
-    <script id="MathJax-script" async
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 </head>
 
@@ -36,7 +36,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">ECE</li>
+                <li aria-current="page" class="breadcrumb-item active">ECE</li>
             </ol>
         </nav>
     </p>
@@ -47,46 +47,49 @@
 
         <div class="card-body">
             <p>
-                <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#mathJaxGuide"
-                        aria-expanded="false" aria-controls="mathJaxGuide">MathJax guide to write Mathematical equations
+                <button aria-controls="mathJaxGuide" aria-expanded="false" class="btn btn-dark"
+                        data-target="#mathJaxGuide" data-toggle="collapse" type="button">MathJax guide to write
+                    Mathematical equations
                 </button>
                 <div class="row">
                     <div class="col">
                         <div class="collapse multi-collapse" id="mathJaxGuide">
                             <div class="card card-body">
-                                <a class="btn btn-light" target="_blank"
+                                <a class="btn btn-light"
                                    href="https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference"
-                                   role="button">MathJax basic tutorial and quick reference</a>
+                                   role="button" target="_blank">MathJax basic tutorial and quick reference</a>
 
                             </div>
                             <div class="card card-body">
                                 <!--start of card-->
-
-
-                                <form action="#" th:action="@{/postContent}" th:object="${mathJaxData}" method="post">
+                                <form action="#" method="post" th:action="@{/postContent}"
+                                      th:object="${mathJaxData}">
                                     <div class="row">
-                                        <div class="col-8">
+                                        <div class="col">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="mathJaxValidationInput">Equations validation</span>
+                                                        <span class="input-group-text"
+                                                              id="mathJaxValidationInput">Equations validation</span>
                                                 </div>
-                                                <textarea type="text" class="form-control" id="mathJaxValidation"
-                                                          name="data" rows="3"
-                                                          aria-describedby="mathJaxValidation"></textarea>
+                                                <textarea aria-describedby="mathJaxValidation" class="form-control"
+                                                          id="mathJaxValidation" name="data" rows="3"
+                                                          type="text"></textarea>
                                             </div>
                                         </div>
+
+                                    </div>
+                                    <div class="row">
                                         <div class="col-4">
-            <p>
-                <button class="btn btn-dark" type="submit" aria-expanded="false" aria-controls="viewEquation">
-                    Button with data-target
-                </button>
-            </p>
-            <div id="viewEquation">
-                <div class="card card-body" th:text="${equation}"> Equation
-                </div>
-            </div>
-        </div>
-    </div>
+                                            <button aria-controls="viewEquation" aria-expanded="false" id="validateEquation"
+                                                    class="btn btn-dark" type="submit">
+                                                Validate Equation
+                                            </button>
+                                        </div>
+                                        <div class="col-8" id="viewEquation" >
+                                            <div class="card card-body" th:text="${equation}"> Equation
+                                            </div>
+                                        </div>
+                                    </div>
     </form>
 
 
@@ -100,59 +103,63 @@
 </p>
 
 
-<form action="#" th:action="@{/postQuestion}" th:object="${question}" method="post">
+<form action="#" method="post" th:action="@{/postQuestion}" th:object="${question}">
     <div class="form-group">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">Question</span>
             </div>
-            <textarea type="text" class="form-control" id="question" name="content" rows="4"
-                      aria-describedby="basic-addon3"></textarea>
+            <textarea aria-describedby="basic-addon3" class="form-control" id="question" name="content"
+                      rows="4" type="text"></textarea>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">Option 1</span>
             </div>
-            <textarea type="text" class="form-control" id="option1" name="option1" rows="2"
-                      aria-describedby="basic-addon3"></textarea>
+            <textarea aria-describedby="basic-addon3" class="form-control" id="option1" name="option1"
+                      rows="2" type="text"></textarea>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">Option 2</span>
             </div>
-            <textarea type="text" class="form-control" id="option2" name="option2" rows="2"
-                      aria-describedby="basic-addon3"></textarea>
+            <textarea aria-describedby="basic-addon3" class="form-control" id="option2" name="option2"
+                      rows="2" type="text"></textarea>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">Option 3</span>
             </div>
-            <textarea type="text" class="form-control" id="option3" name="option3" rows="2"
-                      aria-describedby="basic-addon3"></textarea>
+            <textarea aria-describedby="basic-addon3" class="form-control" id="option3" name="option3"
+                      rows="2" type="text"></textarea>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">Option 4</span>
             </div>
-            <textarea type="text" class="form-control" id="option4" name="option4" rows="2"
-                      aria-describedby="basic-addon3"></textarea>
+            <textarea aria-describedby="basic-addon3" class="form-control" id="option4" name="option4"
+                      rows="2" type="text"></textarea>
         </div>
 
         <label>Enter Correct Answer</label>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="answer" id="inlineRadio1" value="option1">
+            <input class="form-check-input" id="inlineRadio1" name="answer" type="radio"
+                   value="option1">
             <label class="form-check-label" for="inlineRadio1">1</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="answer" id="inlineRadio2" value="option2">
+            <input class="form-check-input" id="inlineRadio2" name="answer" type="radio"
+                   value="option2">
             <label class="form-check-label" for="inlineRadio2">2</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="answer" id="inlineRadio3" value="option3">
+            <input class="form-check-input" id="inlineRadio3" name="answer" type="radio"
+                   value="option3">
             <label class="form-check-label" for="inlineRadio3">3</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="answer" id="inlineRadio4" value="option4">
+            <input class="form-check-input" id="inlineRadio4" name="answer" type="radio"
+                   value="option4">
             <label class="form-check-label" for="inlineRadio4">4</label>
         </div>
 
@@ -160,8 +167,8 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Explaination</span>
             </div>
-            <textarea type="text" class="form-control" id="explanation" name="explanation" rows="3"
-                      aria-describedby="basic-addon3"></textarea>
+            <textarea aria-describedby="basic-addon3" class="form-control" id="explanation"
+                      name="explanation" rows="3" type="text"></textarea>
         </div>
 
         <h2>Enter tags/ Catagories</h2>
@@ -169,7 +176,7 @@
 
         <div>
             <p>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button class="btn btn-primary" type="submit">Submit</button>
             </p>
         </div>
     </div>
@@ -181,11 +188,6 @@
 </div>
 
 <script>
-    var number = [[${number}]];
-    var message = "[[${message}]]";
-    console.log("Numbeer+ " + number);
-    console.log("message+ " + message);
-
 
     var input1 = document.querySelector('input[name=tags]'),
         input2 = document.querySelector('textarea[name=tags2]'),
@@ -205,25 +207,29 @@
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+<script crossorigin="anonymous"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script type="text/javascript"
-        th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
-<script type="text/javascript"
-        th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}" type="text/javascript"></script>
+<script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}" type="text/javascript"></script>
+
+
+    <script>
+        $("#validateEquation").click(function(event) {
+            const equationDatat = $("#mathJaxValidation").val();
+            $('#validateEquation').val(equationDatat);
+        });
+    </script>
 
 <script>
-
-
-    $(function() {
+    $(function () {
         // store a reference to the collapse div so that
         // we don't have to keep looking it up in the dom
         const collapseExample = $("#mathJaxGuide");
 
         // register a callback function to the collapse div that
         // will be called every time the collapse is opened.
-        collapseExample.on("shown.bs.collapse", function() {
+        collapseExample.on("shown.bs.collapse", function () {
             // since we know that that this function is called on
             // open, we'll set the localStorage value to "show"
             localStorage.setItem("mathJaxGuide", "show");
@@ -231,7 +237,7 @@
 
         // register a callback function to the collapse div that
         // will be called every time the collapse is closed.
-        collapseExample.on("hidden.bs.collapse", function() {
+        collapseExample.on("hidden.bs.collapse", function () {
             // since we know that that this function is called on
             // open, we'll set the localStorage value to "hide"
             localStorage.setItem("mathJaxGuide", "hide");
@@ -253,10 +259,9 @@
             collapseExample.collapse("hide");
         }
     });
-
-
 </script>
 
 
 </body>
+
 </html>
