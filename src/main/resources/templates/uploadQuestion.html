@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="vi  ewport">
 
     <!-- Bootstrap CSS -->
     <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -25,12 +26,33 @@
 
 
 <div class="container">
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="index.html">
-            <!--            <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30"-->
-            <!--                 class="d-inline-block align-top" alt="">-->
+    <nav class="navbar navbar-light bg-dark">
+        <a class="navbar-brand text-light" href="#">
             LearnHacks
         </a>
+        <!--		<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>-->
+
+        <!--		<div class="col" sec:authorize="hasRole('ROLE_USER')">-->
+        <!--			<form action="#" th:action="@{/getQuestionPage}" method="get">-->
+        <!--				<button type="submit"  value="Logout" class="btn btn-light">Upload question</button>-->
+        <!--			</form>-->
+        <!--		</div>-->
+
+        <div sec:authorize="isAuthenticated()"  class="dropdown pmd-dropdown pmd-user-info ml-auto">
+            <button href="javascript:void(0);" class="btn-user dropdown-toggle media align-items-center bg-light" data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
+                <!--				<img class="mr-2" src="https://pro.propeller.in/assets/images/avatar-icon-40x40.png" width="40" height="40" alt="avatar">-->
+                <div class="media-body">
+                    <span  sec:authentication="principal.username">User</span>
+                </div>
+                <i class="material-icons md-light ml-2 pmd-sm"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/getQuestionPage}">Edit Profile</a></li>
+                <li class="dropdown-item" sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/getQuestionPage}">Upload Questions</a></li>
+                <li class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div>
+
     </nav>
     <p>
         <nav aria-label="breadcrumb">
