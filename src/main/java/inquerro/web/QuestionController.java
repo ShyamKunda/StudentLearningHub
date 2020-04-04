@@ -5,6 +5,7 @@ import inquerro.model.MiniQuestion;
 import inquerro.model.Question;
 import inquerro.service.FirebaseService;
 import inquerro.service.QuestionService;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -62,5 +64,16 @@ public class QuestionController {
         System.out.println(userList);
         model.addAttribute("customersAll", userList);
         return "customersAll";
+    }
+
+    @GetMapping("/getQuestionsPage")
+    public String getQuestionsPage(@RequestParam(value = "start", required = false)Integer start, Model model) throws ExecutionException, InterruptedException, IOException {
+
+
+        System.out.println("sstart: " + start);
+        List<Question> userList = questionService.getPaginatedQuestions(start,Integer.parseInt("3"));
+        System.out.println(userList);
+        model.addAttribute("customersAll", userList);
+        return "getQuestionsPage";
     }
 }

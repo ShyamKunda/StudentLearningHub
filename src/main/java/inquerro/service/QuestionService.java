@@ -29,6 +29,11 @@ import java.util.regex.Pattern;
 @Service
 public class QuestionService {
 
+    Firestore firestore;
+
+    public QuestionService() {
+        this.firestore = FirestoreClient.getFirestore();
+    }
 
     public Question constructQuestion(MiniQuestion miniQuestion){
 
@@ -60,21 +65,32 @@ public class QuestionService {
 
     }
 
-    public List<Question> getAllQuestions() throws ExecutionException, InterruptedException, IOException {
-
-        Firestore firestore = FirestoreClient.getFirestore();
+    public List<Question> getPaginatedQuestions(int start, int count) throws ExecutionException, InterruptedException {
 
         CollectionReference collectionReference = firestore.collection("Questions");
-        ApiFuture<QuerySnapshot> futureWithCondition = collectionReference.whereGreaterThanOrEqualTo("id", 4).get();
-
+        ApiFuture<QuerySnapshot> futureWithCondition = collectionReference.orderBy("id").startAfter(start).limit(count).get();
         List<QueryDocumentSnapshot> documents1 = futureWithCondition.get().getDocuments();
-        System.out.println("***********************************");
-        System.out.println(documents1.toArray().toString());
+        List<Question> allQuestions = new ArrayList<>();
         for (QueryDocumentSnapshot document : documents1) {
 
             System.out.println(document.get("id"));
+            Map<String, Object> userData= document.getData();
+            List<String> optionsList = (List<String>) userData.get("options");
+
+            Question question = Question.builder()
+                    .content(userData.get("content").toString())
+                    .answer(userData.get("answer").toString())
+                    .options(optionsList)
+                    .explanation(userData.get("explanation").toString())
+                    .build();
+            allQuestions.add(question);
         }
-        System.out.println("***********************************");
+
+        return allQuestions;
+
+    }
+
+    public List<Question> getAllQuestions() throws ExecutionException, InterruptedException, IOException {
 
         ApiFuture<QuerySnapshot> future = firestore.collection("Questions").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
