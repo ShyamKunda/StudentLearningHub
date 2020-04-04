@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class Question {
     private String answer;
     private String author;
     private List<String> tags;
-    private Instant createdAt;
-    private Instant modifiedAt;
+    private Timestamp createdAt;
+    private Timestamp modifiedAt;
     private boolean isDeleted;
 
 

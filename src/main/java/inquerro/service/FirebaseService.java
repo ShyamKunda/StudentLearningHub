@@ -2,25 +2,24 @@ package inquerro.service;
 
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import inquerro.model.MathJaxVerification;
 import inquerro.model.Question;
-import inquerro.model.User;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Service
 public class FirebaseService {
 
-    Firestore firestore;
+    private Firestore firestore;
+    private Timestamp timestamp;
+
     public FirebaseService() {
 
         firestore = FirestoreClient.getFirestore();
@@ -29,8 +28,21 @@ public class FirebaseService {
 
     public String  saveQuestion(Question question) throws ExecutionException, InterruptedException {
 
-
         ApiFuture<WriteResult> collectionsApiFuture =  firestore.collection("Questions").document().set(question);
+        return collectionsApiFuture.get().getUpdateTime().toString();
+    }
+
+    public Long getQuestionsCount() throws ExecutionException, InterruptedException {
+        Long totalQuestions = firestore.collection("Stats").document("questions").get().get().getLong("count");
+        QuerySnapshot querySnapshot =  firestore.collection("Questions").orderBy("id", Query.Direction.DESCENDING).limit(1).get().get();
+        return querySnapshot.getDocuments().get(0).getLong("id");
+    }
+
+    public String setQuestionsCount(Long count) throws ExecutionException, InterruptedException {
+
+        ApiFuture<WriteResult> collectionsApiFuture = firestore.collection("Stats").document("questions/id").set(count);
+
+
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
 

@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,17 +47,15 @@ public class QuestionService {
             System.out.println("currentUserName " + currentUserName);
         }
 
-
         Question question = Question.builder()
                 .answer(miniQuestion.getAnswer())
                 .author(currentUserName)
                 .tags(miniQuestion.getTags2())
                 .content(miniQuestion.getContent())
-                .createdAt(Instant.now())
+                .createdAt(new Timestamp(System.currentTimeMillis()))
                 .explanation(miniQuestion.getExplanation())
                 .isDeleted(false)
-                .id(2l)
-                .modifiedAt(Instant.now())
+                .modifiedAt(new Timestamp(System.currentTimeMillis()))
                 .options(Arrays.asList(new String[]{miniQuestion.getOption1(),miniQuestion.getOption2(),miniQuestion.getOption3(),miniQuestion.getOption4()}))
                 .build();
 
@@ -69,6 +68,7 @@ public class QuestionService {
 
         CollectionReference collectionReference = firestore.collection("Questions");
         ApiFuture<QuerySnapshot> futureWithCondition = collectionReference.orderBy("id").startAfter(start).limit(count).get();
+
         List<QueryDocumentSnapshot> documents1 = futureWithCondition.get().getDocuments();
         List<Question> allQuestions = new ArrayList<>();
         for (QueryDocumentSnapshot document : documents1) {

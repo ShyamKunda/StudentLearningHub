@@ -35,15 +35,19 @@ public class QuestionController {
     }
 
     @PostMapping("/postQuestion")
-    public ResponseEntity<MiniQuestion> createQuestion(@ModelAttribute MiniQuestion question) throws ExecutionException, InterruptedException {
+    public ResponseEntity<MiniQuestion> createQuestion(@ModelAttribute MiniQuestion miniQuestion) throws ExecutionException, InterruptedException {
 
 
-        System.out.println(question.toString());
+        System.out.println(miniQuestion.toString());
 
-        if (firebaseService.saveQuestion(questionService.constructQuestion(question)).length() > 0)
-            return ResponseEntity.status(HttpStatus.OK).body(question);
+        Question question = questionService.constructQuestion(miniQuestion);
+
+        question.setId(firebaseService.getQuestionsCount()+1);
+
+        if (firebaseService.saveQuestion(question).length() > 0)
+            return ResponseEntity.status(HttpStatus.OK).body(miniQuestion);
         else
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(question);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(miniQuestion);
 
     }
 
