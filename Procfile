@@ -1,0 +1,1 @@
+web: java -jar target/registration-login-springboot-security-thymeleaf-0.0.1-SNAPSHOT.jar

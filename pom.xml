@@ -7,7 +7,7 @@
 	<groupId>net.guides.springboot</groupId>
 	<artifactId>registration-login-springboot-security-thymeleaf</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>registration-login-springboot-security-thymeleaf</name>
 	<description>Demo project for Spring Boot</description>
