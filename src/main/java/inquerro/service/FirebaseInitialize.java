@@ -24,7 +24,7 @@ public class FirebaseInitialize {
                .setDatabaseUrl("https://inquerro-8ee6e.firebaseio.com")
                .build();
 
-        if(FirebaseApp.getInstance(FirebaseApp.DEFAULT_APP_NAME) != null) {
+        if(FirebaseApp.getApps() != null) {
              FirebaseApp.initializeApp(options);
         }
    }
