@@ -19,8 +19,6 @@ public class FirebaseService {
 
     public FirebaseService() {
 
-
-
     }
 
     public String  saveQuestion(Question question) throws ExecutionException, InterruptedException {

@@ -30,14 +30,11 @@ import java.util.regex.Pattern;
 @Service
 public class QuestionService {
 
-    Firestore firestore;
-
     public QuestionService() {
-        this.firestore = FirestoreClient.getFirestore();
+
     }
 
     public Question constructQuestion(MiniQuestion miniQuestion){
-
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = "anonymous";
@@ -66,6 +63,7 @@ public class QuestionService {
 
     public List<Question> getPaginatedQuestions(int start, int count) throws ExecutionException, InterruptedException {
 
+        Firestore firestore = FirestoreClient.getFirestore();
         CollectionReference collectionReference = firestore.collection("Questions");
         ApiFuture<QuerySnapshot> futureWithCondition = collectionReference.orderBy("id").startAfter(start).limit(count).get();
 
@@ -92,6 +90,7 @@ public class QuestionService {
 
     public List<Question> getAllQuestions() throws ExecutionException, InterruptedException, IOException {
 
+        Firestore firestore = FirestoreClient.getFirestore();
         ApiFuture<QuerySnapshot> future = firestore.collection("Questions").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         List<Question> allUsers = new ArrayList<>();
