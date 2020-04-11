@@ -54,8 +54,8 @@
     <p>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="text-info" href="/">Home</a></li>
-                <li class="breadcrumb-item"><a class="text-info" href="index.html">ECE</a></li>
+                <li class="breadcrumb-item"><a class="text-info" href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-info" href="#">ECE</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Digital Electronics</li>
             </ol>
         </nav>
@@ -92,15 +92,14 @@
             </ul>
         </nav>
     </div>
-    <div class="card">
+    <div class="container">
+        <div class="row">
+        <div class="col-md-12 mb-3">
+        <div class="card">
         <h5 class="card-header">Digital Electronics</h5>
-
-        <div class="container">
-
             <div class="card-body">
                 <ol>
                 <div th:each="produto,produtoStat : ${customersAll}"    >
-
                         <li>
                     <h6 class="card-title"  th:text="${produto.content}" ></h6>
                     <p>
@@ -136,10 +135,9 @@
                 </div>
                 </ol>
             </div>
-
+    </div>
         </div>
-
-
+        </div>
     </div>
 </div>
 <div>
