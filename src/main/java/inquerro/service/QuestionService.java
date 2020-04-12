@@ -11,6 +11,8 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
 import inquerro.model.MiniQuestion;
 import inquerro.model.Question;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +31,8 @@ import java.util.regex.Pattern;
 @Service
 public class QuestionService {
 
+    Logger logger = LoggerFactory.getLogger(QuestionService.class);
+
     public QuestionService() {
 
     }
@@ -40,14 +43,29 @@ public class QuestionService {
         String currentUserName = "anonymous";
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();
-            System.out.println("authentication.getDetails();: " + authentication.getDetails());
-            System.out.println("currentUserName " + currentUserName);
+            logger.info("authentication.getDetails();: " + authentication.getDetails());
+            logger.info("currentUserName " + currentUserName);
+        }
+
+        List<String> tags =  miniQuestion.getTags2();
+
+        List<String> newTags =  miniQuestion.getTags2();
+        for(int i=0; i<tags.size() ;i++){
+
+           logger.info("tags.get(i)" + tags.get(i));
+           String tag =  tags.get(i)
+                   .replace("[{\"value\":\"", "")
+                   .replace("\"}","")
+                   .replace("{\"value\":\"","")
+                   .replace("]","");
+            logger.info("tags String" + tag);
+           newTags.set(i,tag);
         }
 
         Question question = Question.builder()
                 .answer(miniQuestion.getAnswer())
                 .author(currentUserName)
-                .tags(miniQuestion.getTags2())
+                .tags(newTags)
                 .content(miniQuestion.getContent())
                 .createdAt(new Timestamp(System.currentTimeMillis()))
                 .explanation(miniQuestion.getExplanation())
@@ -71,7 +89,7 @@ public class QuestionService {
         List<Question> allQuestions = new ArrayList<>();
         for (QueryDocumentSnapshot document : documents1) {
 
-            System.out.println(document.get("id"));
+            logger.info("document id:" + document.get("id"));
             Map<String, Object> userData= document.getData();
             List<String> optionsList = (List<String>) userData.get("options");
 
@@ -96,7 +114,8 @@ public class QuestionService {
         List<Question> allUsers = new ArrayList<>();
         for (QueryDocumentSnapshot document : documents) {
 
-            System.out.println(document.getData().values());
+            logger.info("document.getData().values()" + document.getData().values());
+
             Map<String, Object> userData= document.getData();
 
             List<String> optionsList = (List<String>) userData.get("options");
@@ -110,6 +129,8 @@ public class QuestionService {
             allUsers.add(question);
         }
         System.out.println(allUsers);
+
+        logger.info("allUsers" + allUsers);
         return allUsers;
     }
 

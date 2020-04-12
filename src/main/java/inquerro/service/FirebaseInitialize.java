@@ -28,7 +28,6 @@ public class FirebaseInitialize {
     //todo 3. Add proper exception
    public void initialize() {
 
-
         FileSearch fileSearch = new FileSearch();
         try {
 
@@ -48,12 +47,5 @@ public class FirebaseInitialize {
         catch (Exception e){
             logger.error(e.getMessage());
         }
-
-
-        //InputStream resource = this.getClass().getClassLoader().getResourceAsStream(fileName);
-
-
-
-
    }
 }

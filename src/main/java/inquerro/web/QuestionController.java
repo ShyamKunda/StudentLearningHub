@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 @Controller
 public class QuestionController {
 
-
     FirebaseService firebaseService;
     QuestionService questionService;
 
@@ -42,6 +41,7 @@ public class QuestionController {
 
         Question question = questionService.constructQuestion(miniQuestion);
 
+        System.out.println(miniQuestion.toString());
         question.setId(firebaseService.getQuestionsCount()+1);
 
         if (firebaseService.saveQuestion(question).length() > 0)
@@ -63,7 +63,6 @@ public class QuestionController {
     @GetMapping("/listStudentsAall")
     public String listStudentAll(Model model) throws ExecutionException, InterruptedException, IOException {
 
-        System.out.println("Entered here");
         List<Question> userList = questionService.getAllQuestions();
         System.out.println(userList);
         model.addAttribute("customersAll", userList);
