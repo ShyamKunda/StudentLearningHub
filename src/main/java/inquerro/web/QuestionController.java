@@ -73,7 +73,6 @@ public class QuestionController {
     @GetMapping("/getQuestionsPage")
     public String getQuestionsPage(@RequestParam(value = "start", required = false)Integer start, Model model) throws ExecutionException, InterruptedException, IOException {
 
-
         System.out.println("sstart: " + start);
         List<Question> userList = questionService.getPaginatedQuestions(start,Integer.parseInt("3"));
         System.out.println(userList);

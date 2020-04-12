@@ -23,13 +23,16 @@ public class FirebaseInitialize {
     Logger logger = LoggerFactory.getLogger(FirebaseInitialize.class);
 
     @PostConstruct //Initialise this method during startUp
+    //todo 1. Add Proper logger
+    //todo 2. Add profile for dev and prod environment
+    //todo 3. Add proper exception
    public void initialize() {
 
 
         FileSearch fileSearch = new FileSearch();
         try {
 
-            String fileName2 = fileSearch.searchDirectory(new File("/tmp/eb_extracted_jar/BOOT-INF/classes"), "serviceAccount.json");
+            String fileName2 = fileSearch.searchDirectory(new File("tmp/eb_extracted_jar/BOOT-INF/classes"), "serviceAccount.json");
             FileInputStream serviceAccount =
                     new FileInputStream(fileName2);
             //InputStream resource = this.getClass().getClassLoader().getResourceAsStream("/data/serviceAccount.json");
