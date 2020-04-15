@@ -10,6 +10,8 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import inquerro.model.MathJaxVerification;
 import inquerro.model.Question;
+import inquerro.model.User;
+import inquerro.web.dto.UserRegistrationDto;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutionException;
@@ -23,8 +25,17 @@ public class FirebaseService {
 
     public String  saveQuestion(Question question) throws ExecutionException, InterruptedException {
 
+
         Firestore firestore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> collectionsApiFuture =  firestore.collection("Questions").document().set(question);
+        return collectionsApiFuture.get().getUpdateTime().toString();
+    }
+
+    public String  saveUser(UserRegistrationDto user) throws ExecutionException, InterruptedException {
+
+
+        Firestore firestore = FirestoreClient.getFirestore();
+        ApiFuture<WriteResult> collectionsApiFuture =  firestore.collection("User").document().set(user);
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
 

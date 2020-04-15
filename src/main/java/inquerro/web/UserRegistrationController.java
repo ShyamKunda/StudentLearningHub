@@ -3,9 +3,13 @@ package inquerro.web;
 import javax.validation.Valid;
 
 import inquerro.model.User;
+import inquerro.service.FirebaseService;
 import inquerro.service.UserService;
 import inquerro.web.dto.UserRegistrationDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,12 +18,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.concurrent.ExecutionException;
+
 @Controller
 @RequestMapping("/registration")
 public class UserRegistrationController {
 
-    @Autowired
+    Logger logger = LoggerFactory.getLogger(UserRegistrationController.class);
     private UserService userService;
+    private FirebaseService firebaseService;
+    private BCryptPasswordEncoder passwordEncoder;
+
+    public UserRegistrationController(UserService userService, FirebaseService firebaseService, BCryptPasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.firebaseService = firebaseService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @ModelAttribute("user")
     public UserRegistrationDto userRegistrationDto() {
@@ -44,7 +58,17 @@ public class UserRegistrationController {
             return "registration";
         }
 
+
         userService.save(userDto);
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userDto.setConfirmPassword(passwordEncoder.encode(userDto.getConfirmPassword()));
+        try {
+            firebaseService.saveUser(userDto);
+        } catch (ExecutionException e) {
+            logger.error(e.getMessage());
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage());
+        }
         return "redirect:/registration?success";
     }
 

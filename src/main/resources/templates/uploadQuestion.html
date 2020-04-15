@@ -19,6 +19,29 @@
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.min.js"></script>
     <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
+    <style>
+        .tags-look .tagify__dropdown__item{
+            display: inline-block;
+            border-radius: 3px;
+            padding: .3em .5em;
+            border: 1px solid #CCC;
+            background: #F3F3F3;
+            margin: .2em;
+            font-size: .85em;
+            color: black;
+            transition: 0s;
+        }
+
+        .tags-look .tagify__dropdown__item--active{
+            color: black;
+        }
+
+        .tags-look .tagify__dropdown__item:hover{
+            background: lightyellow;
+            border-color: gold;
+        }
+    </style>
+
 </head>
 
 
@@ -195,6 +218,7 @@
         <h2>Enter tags/ Catagories</h2>
         <textarea name='tags2' placeholder='tags'>Engineering</textarea>
 
+<!--        <input name='input-custom-dropdown' class='some_class_name' placeholder='write some tags' value='css, html, javascript'>-->
         <div>
             <p>
                 <button class="btn btn-primary" type="submit">Submit</button>
@@ -208,6 +232,28 @@
 
     </div>
 </div>
+
+<script>
+
+    var input = document.querySelector('input[name="input-custom-dropdown"]'),
+        // init Tagify script on the above inputs
+        tagify = new Tagify(input, {
+            enforeWhitelist: true,
+            whitelist: ["Engineering", "ECE","CSE",
+                "Mechanical","Civil","EEE",
+                "Engineering Mathematics",
+                "Gate", "ISRO","Networks","Signals and Systems", "Electronic Devices", "Analog Circuits"],
+            maxTags: 10,
+            dropdown: {
+                maxItems: 20,           // <- mixumum allowed rendered suggestions
+                classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                enabled: 0,             // <- show suggestions on focus
+                closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+            }
+        })
+    </script>
+
+
 <script>
 
     var input1 = document.querySelector('input[name=tags]'),
@@ -215,7 +261,16 @@
         // init Tagify script on the above inputs
         tagify2 = new Tagify(input2, {
             enforeWhitelist: true,
-            whitelist: ["Engineering", "ECE", "CSE", "Mechanical", "Gate", "ISRO"]
+            whitelist: ["ECE","CSE",
+                "Mechanical","Civil","EEE",
+                "Engineering Mathematics",
+                "Gate", "ISRO","Networks","Signals and Systems", "Electronic Devices", "Analog Circuits"],
+            dropdown: {
+                maxItems: 20,           // <- mixumum allowed rendered suggestions
+                classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                enabled: 0,             // <- show suggestions on focus
+                closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+            }
         });
 
     // toggle Tagify on/off
