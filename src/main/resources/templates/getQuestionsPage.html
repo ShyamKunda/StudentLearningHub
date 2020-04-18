@@ -54,8 +54,8 @@
     <p>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="text-info" href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a class="text-info" href="#">ECE</a></li>
+                <li class="breadcrumb-item"><a class="text-info" href="/">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-info" href="/">ECE</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Digital Electronics</li>
             </ol>
         </nav>
@@ -93,8 +93,8 @@
         </nav>
     </div>
 
-    <div class="container">
-        <div class="row">
+    <div class="container" id="questionsContainer">
+
         <div class="card">
         <h5 class="card-header">Digital Electronics</h5>
             <div class="card-body">
@@ -103,25 +103,29 @@
                         <li>
                     <h6 class="card-title"  th:text="${produto.content}" ></h6>
                     <p>
-                        <form action="/action_page.php">
+<!--                        <form action="/action_page.php">-->
                     <p>
                     <div class="form-check" th:each="options,custStat : ${produto.options}">
-                        <label class="form-check-label" th:for="'radio' + ${custStat.index}">
-                            <input type="radio" class="form-check-input" th:id="'radio' + ${custStat.index}" name="optradio"
+                        <label class="form-check-label" th:for="${produtoStat.index} + 'radio' + ${custStat.index}">
+                            <input type="radio" class="form-check-input" th:id="${produtoStat.index} +'radio' + ${custStat.index}" name="optradio"
                                    th:value="${options}"   th:text="${options}" >
                         </label>
                     </div>
                     </p>
-                    <button type="submit" class="btn btn-dark">Submit</button>
+                    <button class="btn btn-dark" type="button"  onclick="validateAnswer(this)" th:id="${produtoStat.index}">
+                        Submit
+                    </button>
+<!--                    <button type="submit" class="btn btn-dark">Submit</button>-->
 <!--                    <img src="https://img.icons8.com/cute-clipart/64/000000/facebook-like.png"/>-->
-                    </form>
+<!--                    </form>-->
                     </p>
-                    <p>
-                        <button class="btn btn-info" type="button" data-toggle="collapse"
-                                th:data-target="'#collapseExample' + ${produtoStat.index}" aria-expanded="false" th:aria-controls="'collapseExample' + ${produtoStat.index}">
+                    <div th:id="'viewAnswerdiv' + ${produtoStat.index}">
+                        <button class="btn btn-info" type="button" data-toggle="collapse" th:id="'viewAnswer' + ${produtoStat.index}"
+                                th:data-target="'#collapseExample' + ${produtoStat.index}" aria-expanded="false" th:aria-controls="'collapseExample' + ${produtoStat.index}" disabled>
                             Show Answer
                         </button>
-                    </p>
+                    </div>
+                            <p></p>
                     <div class="collapse" th:id="'collapseExample'+ ${produtoStat.index}">
                         <div class="card card-body" th:text="${produto.explanation}">
                         </div>
@@ -137,21 +141,42 @@
             </div>
     </div>
 
-        </div>
+
     </div>
 </div>
 <div>
 </div>
 
+<script th:inline="javascript">
 
+    function validateAnswer(elem) {
+
+        let allQuestions = /*[[${allAnswers}]]*/ null;
+        // alert(allQuestions[parseInt(elem.id)]);
+        console.log("Question Index" + elem.id);
+        let solution = allQuestions[parseInt(elem.id)];
+        console.log("Solution: " + solution);
+        let solutionIndex = solution.replace("option","");
+        let questionIndex = elem.id;
+        console.log("Clicked radio button: " +  questionIndex + "radio"+ solutionIndex);
+
+        let showAnswerId = "#viewAnswer" + questionIndex;
+        console.log(showAnswerId);
+        //document.getElementById(showAnswerId).classList.remove("disabled");
+        $(showAnswerId).removeAttr('disabled');
+        if ( document.getElementById( questionIndex + "radio"+ solutionIndex).checked){
+                alert("Correct Answer")
+        }
+    }
+</script>
 
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"-->
-<!--        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"-->
-<!--        crossorigin="anonymous"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
 <script type="text/javascript"
         th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
 <script type="text/javascript"
