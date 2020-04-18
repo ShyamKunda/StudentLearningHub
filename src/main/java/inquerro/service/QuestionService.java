@@ -71,7 +71,7 @@ public class QuestionService {
                 .explanation(miniQuestion.getExplanation())
                 .isDeleted(false)
                 .modifiedAt(new Timestamp(System.currentTimeMillis()))
-                .options(Arrays.asList(new String[]{miniQuestion.getOption1(),miniQuestion.getOption2(),miniQuestion.getOption3(),miniQuestion.getOption4()}))
+                .options(Arrays.asList(new String[]{miniQuestion.getOption0(),miniQuestion.getOption1(),miniQuestion.getOption2(),miniQuestion.getOption3()}))
                 .build();
 
 
