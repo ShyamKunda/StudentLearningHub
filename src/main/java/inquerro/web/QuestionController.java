@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -72,10 +73,21 @@ public class QuestionController {
     @GetMapping("/getQuestionsPage")
     public String getQuestionsPage(@RequestParam(value = "start", required = false)Integer start, Model model) throws ExecutionException, InterruptedException, IOException {
 
-        System.out.println("sstart: " + start);
-        List<Question> userList = questionService.getPaginatedQuestions(start,Integer.parseInt("3"));
-        System.out.println(userList);
-        model.addAttribute("customersAll", userList);
+        System.out.println("start: " + start);
+        if (start == null){
+            start =10;
+        }
+        List<Question> questionsList = questionService.getPaginatedQuestions(start,Integer.parseInt("8"));
+        System.out.println(questionsList);
+        List<String> allAnswers = new ArrayList<>();
+        for (Question question:
+             questionsList) {
+            allAnswers.add(question.getAnswer());
+        }
+
+        model.addAttribute("customersAll", questionsList);
+        model.addAttribute("allAnswers", allAnswers);
+
         return "getQuestionsPage";
     }
 }
