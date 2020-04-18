@@ -115,6 +115,12 @@
                     <button class="btn btn-dark" type="button"  onclick="validateAnswer(this)" th:id="${produtoStat.index}">
                         Submit
                     </button>
+                            <button class="btn btn-success" type="button"   th:id="success+${produtoStat.index}" hidden>
+                                correct
+                            </button>
+                            <button class="btn btn-danger" type="button"   th:id="fail+${produtoStat.index}" hidden>
+                                wrong
+                            </button>
 <!--                    <button type="submit" class="btn btn-dark">Submit</button>-->
 <!--                    <img src="https://img.icons8.com/cute-clipart/64/000000/facebook-like.png"/>-->
 <!--                    </form>-->
@@ -164,8 +170,15 @@
         console.log(showAnswerId);
         //document.getElementById(showAnswerId).classList.remove("disabled");
         $(showAnswerId).removeAttr('disabled');
+
+        let succesBtnId = "success"+questionIndex;
+        let failBtnId = "fail"+questionIndex;
         if ( document.getElementById( questionIndex + "radio"+ solutionIndex).checked){
-                alert("Correct Answer")
+            document.getElementById(failBtnId).hidden = true;
+            document.getElementById(succesBtnId).hidden = false;
+        }else {
+            document.getElementById(succesBtnId).hidden = true;
+            document.getElementById(failBtnId).hidden = false;
         }
     }
 </script>
