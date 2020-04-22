@@ -216,7 +216,7 @@
         </div>
 
         <h2>Enter tags/ Catagories</h2>
-        <textarea name='tags2' placeholder='tags'>Engineering</textarea>
+        <textarea name='tags2' placeholder='tags' id="allSelectedTags">Engineering</textarea>
 
 <!--        <input name='input-custom-dropdown' class='some_class_name' placeholder='write some tags' value='css, html, javascript'>-->
         <div>
@@ -233,25 +233,25 @@
     </div>
 </div>
 
-<script>
+<!--<script>-->
 
-    var input = document.querySelector('input[name="input-custom-dropdown"]'),
-        // init Tagify script on the above inputs
-        tagify = new Tagify(input, {
-            enforeWhitelist: true,
-            whitelist: ["Engineering", "ECE","CSE",
-                "Mechanical","Civil","EEE",
-                "Engineering Mathematics",
-                "Gate", "ISRO","Networks","Signals and Systems", "Electronic Devices", "Analog Circuits"],
-            maxTags: 10,
-            dropdown: {
-                maxItems: 20,           // <- mixumum allowed rendered suggestions
-                classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
-                enabled: 0,             // <- show suggestions on focus
-                closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-            }
-        })
-    </script>
+<!--    var input = document.querySelector('input[name="input-custom-dropdown"]'),-->
+<!--        // init Tagify script on the above inputs-->
+<!--        tagify = new Tagify(input, {-->
+<!--            enforeWhitelist: true,-->
+<!--            whitelist: ["Engineering", "ECE","CSE",-->
+<!--                "Mechanical","Civil","EEE",-->
+<!--                "Engineering Mathematics",-->
+<!--                "Gate", "ISRO","Networks","Signals and Systems", "Electronic Devices", "Analog Circuits"],-->
+<!--            maxTags: 10,-->
+<!--            dropdown: {-->
+<!--                maxItems: 20,           // <- mixumum allowed rendered suggestions-->
+<!--                classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted-->
+<!--                enabled: 0,             // <- show suggestions on focus-->
+<!--                closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected-->
+<!--            }-->
+<!--        })-->
+<!--    </script>-->
 
 
 <script>
@@ -261,22 +261,34 @@
         // init Tagify script on the above inputs
         tagify2 = new Tagify(input2, {
             enforeWhitelist: true,
-            whitelist: ["ECE","CSE",
-                "Mechanical","Civil","EEE",
-                "Engineering Mathematics",
-                "Gate", "ISRO","Networks","Signals and Systems", "Electronic Devices", "Analog Circuits"],
+            whitelist: ["Electronics & Communication","Electrical Engineering","Computer Science & Information Technology",
+                        "Civil Engineering", "Mechanical Engineering","Engineering Mathematics", "Networks, Signals and Systems",
+                        "Electronic Devices", "Analog Circuits", "Digital Circuits", "Control Systems", "Communications","Electromagnetics",
+                        "Digital Logic", "Computer Organization and Architecture", "Programming and Data Structures", "Algorithms" ,
+                        "Theory of Computation", "Compiler Design","Operating System","Databases","Computer Networks"],
             dropdown: {
                 maxItems: 20,           // <- mixumum allowed rendered suggestions
                 classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
                 enabled: 0,             // <- show suggestions on focus
-                closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+                closeOnSelect: true    // <- do not hide the suggestions dropdown once an item has been selected
             }
         });
 
+
+
+
     // toggle Tagify on/off
-    document.querySelector('input[type=checkbox]').addEventListener('change', function () {
-        document.body.classList[this.checked ? 'add' : 'remove']('disabled');
+    document.querySelector('.tagify').addEventListener('change', function () {
+
+        var list = document.getElementsByClassName("tagify__tag-text");
+
+        console.log("All tags");
+        for(let i=0;i<list.length;i++){
+            console.log(list[i].innerHTML);
+        }
+
     })
+
 </script>
 
 <!-- Optional JavaScript -->

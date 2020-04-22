@@ -19,6 +19,19 @@
             src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
     </script>
 
+    <style type="text/css">
+
+        .btn-circle.btn-sm {
+            width: 35px;
+            height: 35px;
+            padding: 0px 5px;
+            border-radius: 9px;
+            font-size: 25px;
+            text-align: center;
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -115,13 +128,17 @@
                     <button class="btn btn-dark" type="button"  onclick="validateAnswer(this)" th:id="${produtoStat.index}">
                         Submit
                     </button>
-                            <button class="btn btn-success" type="button"   th:id="success+${produtoStat.index}" hidden>
-                                correct
-                            </button>
-                            <button class="btn btn-danger" type="button"   th:id="fail+${produtoStat.index}" hidden>
-                                wrong
-                            </button>
-<!--                    <button type="submit" class="btn btn-dark">Submit</button>-->
+<!--                            <button class="btn btn-success" type="button"   th:id="success+${produtoStat.index}" hidden>-->
+<!--                                correct-->
+<!--                            </button>-->
+<!--                            <button class="btn btn-danger" type="button"   th:id="fail+${produtoStat.index}" hidden>-->
+<!--                                wrong-->
+<!--                            </button>-->
+                            <button type="button" class="btn btn-success btn-circle btn-sm" th:id="success+${produtoStat.index}" hidden="true" data-toggle="tooltip" data-placement="top" title="Correct Answer">&#9989;</button>
+                            <button type="button" class="btn btn-secondary btn-circle btn-sm" th:id="fail+${produtoStat.index}" hidden="true" data-toggle="tooltip" data-placement="top" title="Wrong Answer">&#10060;</button>
+<!--                            <span style='font-size:35px;' >&#9989;</span>-->
+<!--                            <span style='font-size:35px;' >&#10060;</span>-->
+                            <!--                    <button type="submit" class="btn btn-dark">Submit</button>-->
 <!--                    <img src="https://img.icons8.com/cute-clipart/64/000000/facebook-like.png"/>-->
 <!--                    </form>-->
                     </p>
@@ -133,7 +150,10 @@
                     </div>
                             <p></p>
                     <div class="collapse" th:id="'collapseExample'+ ${produtoStat.index}">
-                        <div class="card card-body" th:text="${produto.explanation}">
+                        <div class="card card-body">
+                            <h5 class="card-title" th:text="'Answer:'+${produto.strAnswer}"></h5>
+                            <h5 class="card-title">Explaination</h5>
+                            <p th:text="${produto.explanation}"></p>
                         </div>
 <!--                        <div><p>-->
 <!--                            When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are-->

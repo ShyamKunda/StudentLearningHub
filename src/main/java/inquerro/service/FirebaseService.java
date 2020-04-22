@@ -12,6 +12,8 @@ import inquerro.model.MathJaxVerification;
 import inquerro.model.Question;
 import inquerro.model.User;
 import inquerro.web.dto.UserRegistrationDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutionException;
@@ -20,15 +22,23 @@ import java.util.concurrent.ExecutionException;
 public class FirebaseService {
 
     Firestore firestore;
+    Logger logger = LoggerFactory.getLogger(FirebaseService.class);
 
     public FirebaseService() {
         firestore = FirestoreClient.getFirestore();
     }
 
-    public String  saveQuestion(Question question) throws ExecutionException, InterruptedException {
+    public boolean  saveQuestion(Question question){
 
         ApiFuture<WriteResult> collectionsApiFuture =  firestore.collection("Questions").document().set(question);
-        return collectionsApiFuture.get().getUpdateTime().toString();
+        try {
+            String time = collectionsApiFuture.get().getUpdateTime().toString();
+            return true;
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return false;
+        }
+
     }
 
     public String  saveUser(UserRegistrationDto user) throws ExecutionException, InterruptedException {
@@ -37,11 +47,18 @@ public class FirebaseService {
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
 
-    public Long getQuestionsCount() throws ExecutionException, InterruptedException {
-
-        Long totalQuestions = firestore.collection("Stats").document("questions").get().get().getLong("count");
-        QuerySnapshot querySnapshot =  firestore.collection("Questions").orderBy("id", Query.Direction.DESCENDING).limit(1).get().get();
-        return querySnapshot.getDocuments().get(0).getLong("id");
+    public Long getQuestionsCount() {
+        logger.error("Inside: getQuestionsCount()" );
+        try{
+            QuerySnapshot querySnapshot =  firestore.collection("Questions").orderBy("id", Query.Direction.DESCENDING).limit(1).get().get();
+             if (querySnapshot.getDocuments().size() > 0)
+                return querySnapshot.getDocuments().get(0).getLong("id");
+             else
+                 return 0l;
+        }catch (Exception e) {
+            logger.error(e.getMessage());
+            return -1l;
+        }
     }
 
     public String setQuestionsCount(Long count) throws ExecutionException, InterruptedException {

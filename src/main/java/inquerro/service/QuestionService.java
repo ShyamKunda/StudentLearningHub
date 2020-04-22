@@ -47,6 +47,19 @@ public class QuestionService {
             logger.info("currentUserName " + currentUserName);
         }
 
+        String answer = "";
+        int number = Integer.parseInt( miniQuestion.getAnswer().replace("option",""));
+
+        if (number==0){
+            answer = "a";
+        }else if(number==1){
+            answer = "b";
+        }else if(number == 2){
+            answer = "c";
+        }else
+            answer = "d";
+
+        logger.info("Answer: " + answer);
         List<String> tags =  miniQuestion.getTags2();
 
         List<String> newTags =  miniQuestion.getTags2();
@@ -72,6 +85,7 @@ public class QuestionService {
                 .isDeleted(false)
                 .modifiedAt(new Timestamp(System.currentTimeMillis()))
                 .options(Arrays.asList(new String[]{miniQuestion.getOption0(),miniQuestion.getOption1(),miniQuestion.getOption2(),miniQuestion.getOption3()}))
+                .strAnswer(answer)
                 .build();
 
 
@@ -86,6 +100,7 @@ public class QuestionService {
         ApiFuture<QuerySnapshot> futureWithCondition = collectionReference.orderBy("id").startAfter(start).limit(count).get();
 
         List<QueryDocumentSnapshot> documents1 = futureWithCondition.get().getDocuments();
+        logger.info("Total documents fetech:" + documents1.size());
         List<Question> allQuestions = new ArrayList<>();
         for (QueryDocumentSnapshot document : documents1) {
 
@@ -93,11 +108,24 @@ public class QuestionService {
             Map<String, Object> userData= document.getData();
             List<String> optionsList = (List<String>) userData.get("options");
 
+            String answer = "";
+            int number = Integer.parseInt( userData.get("answer").toString().replace("option",""));
+
+            if (number==0){
+                answer = "a";
+            }else if(number==1){
+                answer = "b";
+            }else if(number == 2){
+                answer = "c";
+            }else
+                answer = "d";
+
             Question question = Question.builder()
                     .content(userData.get("content").toString())
                     .answer(userData.get("answer").toString())
                     .options(optionsList)
                     .explanation(userData.get("explanation").toString())
+                    .strAnswer(answer)
                     .build();
             allQuestions.add(question);
         }
