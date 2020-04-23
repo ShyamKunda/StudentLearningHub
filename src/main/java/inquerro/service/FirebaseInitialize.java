@@ -1,6 +1,7 @@
 package inquerro.service;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.common.util.concurrent.ExecutionError;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import org.slf4j.Logger;
@@ -31,7 +32,8 @@ public class FirebaseInitialize {
         FileSearch fileSearch = new FileSearch();
         try {
 
-            String fileName2 = fileSearch.searchDirectory(new File("tmp/eb_extracted_jar/BOOT-INF/classes"), "serviceAccount.json");
+            String fileName2 =fileSearch.searchDirectory(new File("/tmp/eb_extracted_jar/BOOT-INF/classes"), "serviceAccount.json");
+
             FileInputStream serviceAccount =
                     new FileInputStream(fileName2);
             //InputStream resource = this.getClass().getClassLoader().getResourceAsStream("/data/serviceAccount.json");

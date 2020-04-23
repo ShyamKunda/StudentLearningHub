@@ -26,12 +26,10 @@ public class UserRegistrationController {
 
     Logger logger = LoggerFactory.getLogger(UserRegistrationController.class);
     private UserService userService;
-    private FirebaseService firebaseService;
     private BCryptPasswordEncoder passwordEncoder;
 
-    public UserRegistrationController(UserService userService, FirebaseService firebaseService, BCryptPasswordEncoder passwordEncoder) {
+    public UserRegistrationController(UserService userService, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
-        this.firebaseService = firebaseService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -62,6 +60,7 @@ public class UserRegistrationController {
         userService.save(userDto);
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userDto.setConfirmPassword(passwordEncoder.encode(userDto.getConfirmPassword()));
+        FirebaseService firebaseService = new FirebaseService();
         try {
             firebaseService.saveUser(userDto);
         } catch (ExecutionException e) {
