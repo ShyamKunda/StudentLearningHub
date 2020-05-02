@@ -37,7 +37,7 @@
 <body>
 <div class="container">
     <nav class="navbar navbar-light bg-dark">
-    <a class="navbar-brand text-light" href="#">
+    <a class="navbar-brand text-light" href="/">
         LearnHacks
     </a>
     <!--		<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>-->
@@ -68,8 +68,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a class="text-info" href="/">Home</a></li>
-                <li class="breadcrumb-item"><a class="text-info" href="/">ECE</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Digital Electronics</li>
+                <li class="breadcrumb-item active"  aria-current="page" th:text="${parentTopic}">ECE</li>
+                <li class="breadcrumb-item active" aria-current="page" th:text="${tagsList}">Digital Electronics</li>
             </ol>
         </nav>
     </p>
@@ -82,25 +82,8 @@
     <div>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link text-info" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item">
-<!--                   This is page Item-->
-                    <a  class="page-link text-info" th:href="@{/getQuestionsPage(start=2)}">2</a>
-
-<!--                    end of page-->
-                </li>
-                <li class="page-item">
-                    <a class="page-link text-info" th:href="@{/listStudentsAall}">2</a>
-                </li>
-                <li class="page-item"><a class="page-link text-info" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link text-info" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
+                <li class="page-item" th:each="page,pageIndex : ${paginationList}">
+                    <a  class="page-link text-info" th:href="@{/getQuestionsPageByTagName(start=${page},tags=${tagsList},totalQuestions=${questionsCount},parentTopic=${parentTopic})}" th:text="${page}">Page No</a>
                 </li>
             </ul>
         </nav>
@@ -109,7 +92,7 @@
     <div class="container" id="questionsContainer">
 
         <div class="card">
-        <h5 class="card-header">Digital Electronics</h5>
+        <h5 class="card-header" th:text="${tagsList}">tag</h5>
             <div class="card-body">
                 <ol>
                 <div th:each="produto,produtoStat : ${customersAll}"    >

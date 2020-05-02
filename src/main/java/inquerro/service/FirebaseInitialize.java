@@ -32,7 +32,7 @@ public class FirebaseInitialize {
         FileSearch fileSearch = new FileSearch();
         try {
 
-            String fileName2 =fileSearch.searchDirectory(new File("/tmp/eb_extracted_jar/BOOT-INF/classes"), "serviceAccount.json");
+            String fileName2 =fileSearch.searchDirectory(new File("tmp/eb_extracted_jar/BOOT-INF/classes"), "serviceAccount.json");
 
             FileInputStream serviceAccount =
                     new FileInputStream(fileName2);

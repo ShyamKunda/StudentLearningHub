@@ -89,8 +89,9 @@
 							<div class="list-group">
 								<div class="row">
 								<div class="col-sm-4 mb-3">
-								<form  th:action="@{/getQuestionsPage}" method="get">
-									<input hidden th:name="start" th:value="2"/>
+								<form  th:action="@{/getQuestionsPageByTagName}" method="get">
+									<input hidden th:name="start" th:value="0"/>
+									<input hidden th:name="tags" th:value="Digital-Circuits"/>
 								<button type="submit" class="list-group-item list-group-item-action">Digital Electronics
 									<span class="badge badge-dark">20 Tests</span></button>
 								</form>

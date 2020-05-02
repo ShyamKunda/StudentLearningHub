@@ -214,9 +214,14 @@
             <textarea aria-describedby="basic-addon3" class="form-control" id="explanation"
                       name="explanation" rows="3" type="text"></textarea>
         </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Enter tags/ Catagories</span>
+            </div>
+            <textarea name='tags2' aria-describedby="basic-addon3" class="form-control" rows="1" placeholder='tags' id="allSelectedTags">Engineering</textarea>
+        </div>
 
-        <h2>Enter tags/ Catagories</h2>
-        <textarea name='tags2' placeholder='tags' id="allSelectedTags">Engineering</textarea>
+
 
 <!--        <input name='input-custom-dropdown' class='some_class_name' placeholder='write some tags' value='css, html, javascript'>-->
         <div>
@@ -226,6 +231,12 @@
         </div>
     </div>
 </form>
+
+
+<!--            <form method="POST" th:action="@{/uploadImage}" enctype="multipart/form-data">-->
+<!--                <input type="file" name="imageFile"/><br/><br/>-->
+<!--                <input type="submit" value="Submit" />-->
+<!--            </form>-->
 
         </div>
 
@@ -261,13 +272,12 @@
         // init Tagify script on the above inputs
         tagify2 = new Tagify(input2, {
             enforeWhitelist: true,
-            whitelist: ["Electronics & Communication","Electrical Engineering","Computer Science & Information Technology",
-                        "Civil Engineering", "Mechanical Engineering","Engineering Mathematics", "Networks, Signals and Systems",
+            whitelist: ["Electronics & Communication","Computer Science & Information Technology","Networks & Signals and Systems",
                         "Electronic Devices", "Analog Circuits", "Digital Circuits", "Control Systems", "Communications","Electromagnetics",
                         "Digital Logic", "Computer Organization and Architecture", "Programming and Data Structures", "Algorithms" ,
                         "Theory of Computation", "Compiler Design","Operating System","Databases","Computer Networks"],
             dropdown: {
-                maxItems: 20,           // <- mixumum allowed rendered suggestions
+                maxItems: 40,           // <- mixumum allowed rendered suggestions
                 classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
                 enabled: 0,             // <- show suggestions on focus
                 closeOnSelect: true    // <- do not hide the suggestions dropdown once an item has been selected

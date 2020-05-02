@@ -4,10 +4,7 @@ package inquerro.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import inquerro.model.MiniQuestion;
 import inquerro.model.Question;
@@ -126,6 +123,66 @@ public class QuestionService {
                     .options(optionsList)
                     .explanation(userData.get("explanation").toString())
                     .strAnswer(answer)
+                    .build();
+            allQuestions.add(question);
+        }
+
+        return allQuestions;
+
+    }
+
+
+    public int getTotalQuestionsBasedTags(String[] tags){
+
+        Firestore firestore = FirestoreClient.getFirestore();
+        CollectionReference collectionReference = firestore.collection("Questions");
+        List<String> tagList = Arrays.asList(tags);
+
+
+        try{
+            return collectionReference.whereArrayContainsAny("tags",tagList).get().get().size();
+        }catch (Exception e){
+            logger.error("Unable to get question with specified tags <%s> and Error message is %s", tags.toString(), e.getMessage());
+        }
+
+        return 0;
+    }
+
+    public List<Question> getPaginatedQuestionsByTagNames(int start, String[] tags,int count){
+
+        Firestore firestore = FirestoreClient.getFirestore();
+        CollectionReference collectionReference = firestore.collection("Questions");
+        List<String> tagList = Arrays.asList(tags);
+        ApiFuture<QuerySnapshot> futureWithCondition =  collectionReference.whereArrayContainsAny("tags",tagList).orderBy("id").startAfter(start).limit(count).get();
+
+        List<QueryDocumentSnapshot> documents1 = new ArrayList<>();
+        List<Question> allQuestions = new ArrayList<>();
+        try {
+            documents1 = futureWithCondition.get().getDocuments();
+            logger.info("Total documents fetech:" + documents1.size());
+            if(documents1.size() == 0 ) {
+                logger.info("No documents found with start %d and tags %d",start, tags.toString() );
+                return allQuestions;
+            }
+        } catch (Exception e){
+
+            logger.info("Unable to Fetch documents" + e.getMessage());
+        }
+
+
+        for (QueryDocumentSnapshot document : documents1) {
+
+            logger.info("document id:" + document.get("id"));
+            Map<String, Object> userData= document.getData();
+            List<String> optionsList = (List<String>) userData.get("options");
+
+
+            Question question = Question.builder()
+                    .content(userData.get("content").toString())
+                    .answer(userData.get("answer").toString())
+                    .options(optionsList)
+                    .explanation(userData.get("explanation").toString())
+                    .strAnswer(userData.get("strAnswer").toString())
                     .build();
             allQuestions.add(question);
         }
