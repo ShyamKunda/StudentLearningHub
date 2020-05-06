@@ -1,77 +1,222 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<!--    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}"-->
-<!--          type="text/css"/>-->
-
+    <!-- <link rel="stylesheet" type="text/css" href="mystyle.css"> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style th:inline="text">
+        body {
+            font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
 
-    <title>LearnHack</title>
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        header.masthead {
+            position: relative;
+            background-color: #343a40;
+            background:url(https://images.pexels.com/photos/796602/pexels-photo-796602.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500) no-repeat center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            padding-top: 8rem;
+            padding-bottom: 8rem;
+        }
+
+        header.masthead .overlay {
+            position: absolute;
+            background-color: #212529;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.3;
+        }
+
+        header.masthead h1 {
+            font-size: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            header.masthead {
+                padding-top: 12rem;
+                padding-bottom: 12rem;
+            }
+            header.masthead h1 {
+                font-size: 3rem;
+            }
+        }
+
+        .showcase .showcase-text {
+            padding: 3rem;
+        }
+
+        .showcase .showcase-img {
+            min-height: 30rem;
+            background-size: cover;
+        }
+
+        @media (min-width: 768px) {
+            .showcase .showcase-text {
+                padding: 7rem;
+            }
+        }
+
+        .features-icons {
+            padding-top: 7rem;
+            padding-bottom: 7rem;
+        }
+
+        .features-icons .features-icons-item {
+            max-width: 20rem;
+        }
+
+        .features-icons .features-icons-item .features-icons-icon {
+            height: 7rem;
+        }
+
+        .features-icons .features-icons-item .features-icons-icon i {
+            font-size: 4.5rem;
+        }
+
+        .features-icons .features-icons-item:hover .features-icons-icon i {
+            font-size: 5rem;
+        }
+
+        .testimonials {
+            padding-top: 7rem;
+            padding-bottom: 7rem;
+        }
+
+        .testimonials .testimonial-item {
+            max-width: 18rem;
+        }
+
+        .testimonials .testimonial-item img {
+            max-width: 12rem;
+            box-shadow: 0px 5px 5px 0px #adb5bd;
+        }
+
+        .call-to-action {
+            position: relative;
+            background-color: #343a40;
+            background: url("./img/bg-masthead.jpg") no-repeat center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            padding-top: 7rem;
+            padding-bottom: 7rem;
+        }
+
+        .call-to-action .overlay {
+            position: absolute;
+            background-color: #212529;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.3;
+        }
+
+        footer.footer {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .form-signin .checkbox{
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        .style-6 {
+            border:3px solid #000000;
+            color:#000000;
+            font:12px Montserrat;
+            text-transform:uppercase;
+            padding:10px;
+            font-weight:300;
+            max-width:100px; /* max width of button */
+            display:block;
+            text-align:left;
+            margin:20px 19px 0px auto;
+            position:relative;
+        }
+        .style-6:before {
+            content:">";
+            position:absolute;
+            right:-21px;
+            top:-3px;
+            border-radius:100%;
+            background:#111111;
+            color:#fff;
+            font-size:20px;
+            width:41px;
+            height:41px;
+            line-height:39px;
+            text-align:center;
+            font-family:consolas;
+            -webkit-transition: all 0.3s ease-out;
+            -moz-transition: all 0.3s ease-out;
+            -ms-transition: all 0.3s ease-out;
+            -o-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
+        }
+        .style-6:hover:before {
+            -webkit-transition: all 0.3s ease-out;
+            -moz-transition: all 0.3s ease-out;
+            -ms-transition: all 0.3s ease-out;
+            -o-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            transform: rotate(360deg);
+            text-shadow:1px 1px 0px rgba(0,0,0,0.5);
+        }
+        .style-6:hover {
+            background:transparent;
+            border-color:#000000;
+            color:#010200;
+            letter-spacing:0px;
+        }
+        .tab1 {
+             tab-size: 2;
+         }
+    </style>
 </head>
 <body>
 <div class="container">
-    <nav class="navbar navbar-light bg-dark">
-        <a class="navbar-brand text-light" href="#">
-            LearnHacks
-        </a>
-        <li sec:authorize="isAuthenticated()">
-            <a th:href="@{/logout}">Logout</a>
-        </li>
+    <!-- Navigation -->
+    <nav class="navbar navbar-light bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand text-light" href="#">LearnHack</a>
+            <div id='signin_btn' class="btn btn-light" data-target="#exampleModal" data-toggle="modal">Sign In</div>
+        </div>
     </nav>
 
-
-    <div class="jumbotron bg-white">
-        <h1 class="display-4">LearnHacks</h1>
-        <p>The more that you read, the more things you will know. The more that you learn, the more
-            places you'll go</p>
-    </div>
-
-</div>
-
-<div class="container">
-
-    <div class="row">
-        <div class="col-md-8 mb-3">
-
-            <div class="card">
-                <div class="card-header">
-                    Lessons and Question
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">Tests Available</h5>
-                    <p class="card-text">Click below buttons to view subtopics</p>
-                    <p>
-                        <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-dark"
-                                data-target="#collapseExample" data-toggle="collapse" type="button">
-                            Electonics and Communication
-                            <span class="badge badge-light">100 Tests</span>
-                        </button>
-                    </p>
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                            squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                            ea proident.
-                            <div class="progress">
-                                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar"
-                                     role="progressbar" style="width: 25%;">25%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-8 col-md-4 mb-3">
+                <div class="modal-body">
+                    <!-- ************* -->
 
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Login</h5>
                     <form method="post" th:action="@{/login}">
                         <div th:if="${param.error}">
                             <div class="alert alert-danger">Invalid username or
@@ -100,27 +245,214 @@
                             </div>
                         </div>
                         <div class="form-group">
-						<span>New user? <a href="/" th:href="@{/registration}">Register
-								here</a></span>
+                  <span>New user?
+                    <a class="btn btn-dark btn-sm" href="/" th:href="@{/registration}">Register here</a>
+                  </span>
                         </div>
                     </form>
-                </div>
-            </div>
 
+
+                    <!-- ************* -->
+                </div>
+                <!-- <div class="modal-footer">
+                  <button type="button" class="btn btn-dark">Sign In</button>
+                  <button type="button" class="btn btn-dark">Register</button>
+                </div> -->
+            </div>
         </div>
     </div>
 
 
+
+    <!-- Masthead -->
+    <header class="masthead text-white text-center">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <h1 class="mb-5">Learn | Practice | Compete</h1>
+                    <h4 class="mb-5">Gate | Electronics | Computers | Civil | Mechanical | EEE </h4>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Icons Grid -->
+    <section class="features-icons bg-light text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="features-icons-item mx-auto mb-3 mb-lg-0">
+                        <div class="features-icons-icon d-flex">
+                            <i class="icon-screen-desktop m-auto text-primary"></i>
+                        </div>
+                        <h3>Gate</h3>
+                        <p class="lead mb-0">You have to self Motivator, because its your dream and you only have to chase it</p>
+                        <a href="#" class="style-6" data-target="#exampleModal" data-toggle="modal">Continue</a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="features-icons-item mx-auto mb-3 mb-lg-0">
+                        <div class="features-icons-icon d-flex">
+                            <i class="icon-screen-desktop m-auto text-primary"></i>
+                        </div>
+                        <h3>Computers</h3>
+                        <p class="lead mb-0">Talk is Cheap, Show me the code Bi*th</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="features-icons-item mx-auto mb-5 mb-lg-0">
+                        <div class="features-icons-icon d-flex">
+                            <i class="icon-layers m-auto text-primary"></i>
+                        </div>
+                        <h3>Electronics</h3>
+                        <p class="lead mb-0">I can't keep calm. Because I am Electronics Engineer.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                        <div class="features-icons-icon d-flex">
+                            <i class="icon-check m-auto text-primary"></i>
+                        </div>
+                        <h3>Electrical</h3>
+                        <p class="lead mb-0">Electrical Engineers Always look hotter with Age!</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="features-icons-item mx-auto mb-0">
+                        <div class="features-icons-icon d-flex">
+                            <i class="icon-check m-auto text-primary"></i>
+                        </div>
+                        <h3>Mechanical</h3>
+                        <p class="lead mb-0">Everyday's an adventure when you're a mechanical engineer</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                        <div class="features-icons-icon d-flex">
+                            <i class="icon-check m-auto text-primary"></i>
+                        </div>
+                        <h3>Civil</h3>
+                        <p class="lead mb-0">All men/women are created Equal, Some just Evolve to become Civil Engineer</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                        <div class="features-icons-icon d-flex">
+                            <i class="icon-check m-auto text-primary"></i>
+                        </div>
+                        <h3>Mathematics</h3>
+                        <p class="lead mb-0">Highest form of pure thought is in mathematics!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <!-- <section class="testimonials text-center bg-light">
+      <div class="container">
+        <h2 class="mb-5">What people are saying...</h2>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img class="img-fluid rounded-circle mb-3" src="img/testimonials-1.jpg" alt="">
+              <h5>Margaret E.</h5>
+              <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img class="img-fluid rounded-circle mb-3" src="img/testimonials-2.jpg" alt="">
+              <h5>Fred S.</h5>
+              <p class="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of super nice landing pages."</p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img class="img-fluid rounded-circle mb-3" src="img/testimonials-3.jpg" alt="">
+              <h5>Sarah	W.</h5>
+              <p class="font-weight-light mb-0">"Thanks so much for making these free resources available to us!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- Call to Action -->
+
+    <!-- Footer -->
+    <footer class="footer bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+                    <ul class="list-inline mb-2">
+                        <li class="list-inline-item">
+                            <a href="#">About</a>
+                        </li>
+                        <li class="list-inline-item">&sdot;</li>
+                        <li class="list-inline-item">
+                            <a href="#">Contact</a>
+                        </li>
+                        <li class="list-inline-item">&sdot;</li>
+                        <li class="list-inline-item">
+                            <a href="#">Terms of Use</a>
+                        </li>
+                        <li class="list-inline-item">&sdot;</li>
+                        <li class="list-inline-item">
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                    </ul>
+                    <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2020. All Rights Reserved.</p>
+                </div>
+                <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item mr-3">
+                            <a href="#">
+                                <i class="fa fa-facebook fa-2x fa-fw"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mr-3">
+                            <a href="#">
+                                <i class="fa fa-twitter fa-2x fa-fw"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <i class="fa fa-instagram fa-2x fa-fw"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
 </div>
-
-<!--<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"-->
-<!--        type="text/javascript"></script>-->
-<!--<script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"-->
-<!--        type="text/javascript"></script>-->
-
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+<script>
+    $(document).ready(function(){
+        $('#signin_btn').click(function(){
+            var bt_box_object = bootbox.dialog({
+                    title: 'Please Sign In',
+                    closeButton: false,
+                    message: $('#login_form').html(),
+                    buttons: {
+                        ok: {
+                            label: 'Sign In',
+                            callback: function(){
+                                bt_box_object.modal('hide')
+                            }
+                        }
+                    }
+                }
+            );
+        });
+    });
+</script>
 </body>
+
 </html>

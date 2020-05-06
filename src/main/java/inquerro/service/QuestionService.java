@@ -90,6 +90,59 @@ public class QuestionService {
 
     }
 
+    public boolean likeAQuestion(int questionId){
+        Firestore firestore = FirestoreClient.getFirestore();
+
+        DocumentReference questionDoc;
+        List<String> likes;
+           try {
+               Query query = firestore.collection("Questions").whereEqualTo("id", questionId);
+               questionDoc =  query.get().get().getDocuments().get(0).getReference();
+               logger.info("liked below question with id:" + questionDoc.get().get().get("id"));
+               likes = (List<String>) questionDoc.get().get().get("likes");
+               if(likes == null){
+                   likes = new ArrayList<>();
+               }
+               Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+               String currentUserName = authentication.getName();
+               likes.add(currentUserName);
+               questionDoc.update("likes", likes);
+               return true;
+           }catch (Exception e) {
+               logger.info("Exception occured in likeAQuestion service : " + e.getMessage());
+                e.printStackTrace();
+           }
+
+
+        return false;
+
+    }
+
+    public boolean unlikeAQuestion(int questionId){
+
+        Firestore firestore = FirestoreClient.getFirestore();
+        DocumentReference questionDoc;
+        List<String> likes;
+        try {
+            Query query = firestore.collection("Questions").whereEqualTo("id", questionId);
+            questionDoc =  query.get().get().getDocuments().get(0).getReference();
+            logger.info("un liked below question with id:" + questionDoc.get().get().get("id"));
+            likes = (List<String>) questionDoc.get().get().get("likes");
+            if(likes == null){
+                return true;
+            }
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String currentUserName = authentication.getName();
+            likes.remove(currentUserName);
+            questionDoc.update("likes", likes);
+            return true;
+        }catch (Exception e) {
+            logger.info("Exception occured in unlikeAQuestion service : " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public List<Question> getPaginatedQuestions(int start, int count) throws ExecutionException, InterruptedException {
 
         Firestore firestore = FirestoreClient.getFirestore();
@@ -178,6 +231,10 @@ public class QuestionService {
 
 
             Question question = Question.builder()
+                    .id(Long.parseLong(userData.get("id").toString()))
+                    .author(userData.get("author").toString())
+                    .tags((List<String>)userData.get("tags"))
+                    .isDeleted((boolean)userData.get("deleted"))
                     .content(userData.get("content").toString())
                     .answer(userData.get("answer").toString())
                     .options(optionsList)

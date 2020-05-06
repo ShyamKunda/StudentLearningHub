@@ -1,6 +1,7 @@
 package inquerro.web;
 
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import inquerro.model.ImageModel;
 import inquerro.model.MiniQuestion;
 import inquerro.model.Question;
@@ -49,6 +50,30 @@ public class QuestionController {
                 compressBytes(file.getBytes()));
         imageRepository.save(img);
         return ResponseEntity.status(HttpStatus.OK);
+    }
+
+    @GetMapping("/addLike")
+    public ResponseEntity<String> addLike(@RequestParam(value = "id", required = true) String id){
+
+        boolean result = questionService.likeAQuestion(Integer.parseInt(id));
+
+        if (result)
+            return ResponseEntity.status(HttpStatus.OK).body("Succesfully  liked question");
+        else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unable to like the question");
+
+    }
+
+    @GetMapping("/removeLike")
+    public ResponseEntity<String> removeLike(@RequestParam(value = "id", required = true) String id){
+
+        boolean result = questionService.unlikeAQuestion(Integer.parseInt(id));
+
+        if (result)
+            return ResponseEntity.status(HttpStatus.OK).body("Succesfully  unliked question");
+        else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unable to like the question");
+
     }
 
     @PostMapping("/postQuestion")

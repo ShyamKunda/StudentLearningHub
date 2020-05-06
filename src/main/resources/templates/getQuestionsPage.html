@@ -14,12 +14,89 @@
 
     <title>LearnHacks</title>
 <!--    <script src="https://kit.fontawesome.com/8a02b9f577.js" crossorigin="anonymous"></script>-->
+    <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async
             src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
     </script>
 
     <style type="text/css">
+
+        /*
+   * Basic button style
+   */
+        .btn_like {
+            box-shadow: 1px 1px 0 rgba(255,255,255,0.5) inset;
+            border-radius: 3px;
+            border: 1px solid;
+            display: inline-block;
+            height: 18px;
+            line-height: 18px;
+            padding: 0 8px;
+            position: relative;
+
+            font-size: 12px;
+            text-decoration: none;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+        }
+        /*
+         * Counter button style
+         */
+        .btn_like-counter { margin-right: 39px; }
+        .btn_like-counter:after,
+        .btn_like-counter:hover:after { text-shadow: none; }
+        .btn_like-counter:after {
+            border-radius: 3px;
+            border: 1px solid #d3d3d3;
+            background-color: #eee;
+            padding: 0 8px;
+            color: #777;
+            content: attr(data-count);
+            left: 100%;
+            margin-left: 8px;
+            margin-right: -13px;
+            position: absolute;
+            top: -1px;
+        }
+        .btn_like-counter:before {
+            transform: rotate(45deg);
+            filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.7071067811865476, M12=-0.7071067811865475, M21=0.7071067811865475, M22=0.7071067811865476, sizingMethod='auto expand');
+
+            background-color: #eee;
+            border: 1px solid #d3d3d3;
+            border-right: 0;
+            border-top: 0;
+            content: '';
+            position: absolute;
+            right: -13px;
+            top: 5px;
+            height: 6px;
+            width: 6px;
+            z-index: 1;
+            zoom: 1;
+        }
+        /*
+         * Custom styles
+         */
+        .btn_like {
+            background-color: #dbdbdb;
+            border-color: #bbb;
+            color: #666;
+        }
+        .btn_like:hover,
+        .btn_like.active {
+            text-shadow: 0 1px 0 #b12f27;
+            background-color: #f64136;
+            border-color: #b12f27;
+        }
+        .btn_like:active { box-shadow: 0 0 5px 3px rgba(0,0,0,0.2) inset; }
+        .btn_like span { color: #f64136; }
+        .btn_like:hover, .btn_like:hover span,
+        .btn_like.active, .btn_like.active span { color: #eeeeee; }
+        .btn_like:active span {
+            color: #b12f27;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+        }
 
         .btn-circle.btn-sm {
             width: 35px;
@@ -28,6 +105,16 @@
             border-radius: 9px;
             font-size: 25px;
             text-align: center;
+        }
+
+        .feather {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
         }
 
     </style>
@@ -108,25 +195,22 @@
                         </label>
                     </div>
                     </p>
-                    <button class="btn btn-dark" type="button"  onclick="validateAnswer(this)" th:id="${produtoStat.index}">
+                    <button class="btn btn-dark btn-sm" type="button"  onclick="validateAnswer(this)" th:id="${produtoStat.index}">
                         Submit
                     </button>
-<!--                            <button class="btn btn-success" type="button"   th:id="success+${produtoStat.index}" hidden>-->
-<!--                                correct-->
-<!--                            </button>-->
-<!--                            <button class="btn btn-danger" type="button"   th:id="fail+${produtoStat.index}" hidden>-->
-<!--                                wrong-->
-<!--                            </button>-->
+
+
                             <button type="button" class="btn btn-success btn-circle btn-sm" th:id="success+${produtoStat.index}" hidden="true" data-toggle="tooltip" data-placement="top" title="Correct Answer">&#9989;</button>
                             <button type="button" class="btn btn-secondary btn-circle btn-sm" th:id="fail+${produtoStat.index}" hidden="true" data-toggle="tooltip" data-placement="top" title="Wrong Answer">&#10060;</button>
-<!--                            <span style='font-size:35px;' >&#9989;</span>-->
-<!--                            <span style='font-size:35px;' >&#10060;</span>-->
-                            <!--                    <button type="submit" class="btn btn-dark">Submit</button>-->
-<!--                    <img src="https://img.icons8.com/cute-clipart/64/000000/facebook-like.png"/>-->
-<!--                    </form>-->
                     </p>
+                            <div>
+                                <a title="Love it" th:id="likeButton+${produtoStat.index}" th:name="${produto.id}"  onclick="incrementCount(this)" class="btn_like btn_like-counter" data-count="0"><span>&#x2764;</span></a>
+                                </p>
+                            </div>
+                            <p></p>
+
                     <div th:id="'viewAnswerdiv' + ${produtoStat.index}">
-                        <button class="btn btn-info" type="button" data-toggle="collapse" th:id="'viewAnswer' + ${produtoStat.index}"
+                        <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:id="'viewAnswer' + ${produtoStat.index}"
                                 th:data-target="'#collapseExample' + ${produtoStat.index}" aria-expanded="false" th:aria-controls="'collapseExample' + ${produtoStat.index}" disabled>
                             Show Answer
                         </button>
@@ -161,7 +245,11 @@
     function validateAnswer(elem) {
 
         let allQuestions = /*[[${allAnswers}]]*/ null;
+        //console.log(allQuestions);
+        let allQuestionsDetails = /*[[${customersAll}]]*/ null;
+        console.log(allQuestionsDetails);
         // alert(allQuestions[parseInt(elem.id)]);
+
         console.log("Question Index" + elem.id);
         let solution = allQuestions[parseInt(elem.id)];
         console.log("Solution: " + solution);
@@ -185,6 +273,58 @@
         }
     }
 </script>
+
+<script th:inline="javascript">
+
+    var firstTime = true;
+    var secondTime = false;
+    var arrOfLikes = {};
+
+    function incrementCount(elem) {
+
+        console.log("questionId from name : " +  elem.name);
+           console.log(elem.id)
+        if(!arrOfLikes[elem.id]){
+            arrOfLikes[elem.id] = 1;
+            console.log("liked");
+            console.log(elem.getAttribute("data-count"));
+            elem.setAttribute("data-count", parseInt(elem.getAttribute("data-count")) + 1)
+                console.log($(location).attr('host'));
+                let likeUrl = "http://" +  $(location).attr('host') + "/addLike"
+                    $.ajax({
+                        url: likeUrl,
+                        type: "get",
+                        data: {
+                            id: elem.name
+                        },
+                        success: function(result) {
+                           console.log(result)
+                        }});
+
+        } else {
+            console.log("unliked");
+            delete arrOfLikes[elem.id];
+            console.log(elem.getAttribute("data-count"));
+            elem.setAttribute("data-count", parseInt(elem.getAttribute("data-count")) - 1)
+            let unlikeUrl = "http://" +  $(location).attr('host') + "/removeLike";
+            $.ajax({
+                url: unlikeUrl,
+                type: "get",
+                data: {
+                    id: elem.name
+                },
+                success: function(result) {
+                    console.log(result)
+                }});
+        }
+    }
+
+    function setIsClicked() {
+        isLiked = !isLiked;
+    }
+
+</script>
+
 
 
 <!-- Optional JavaScript -->
