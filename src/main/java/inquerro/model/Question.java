@@ -26,6 +26,6 @@ public class Question {
     private Timestamp modifiedAt;
     private boolean isDeleted;
     private String strAnswer;
-
+    private List<String> likes;
 
 }

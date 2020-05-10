@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import sun.rmi.runtime.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -135,6 +138,7 @@ public class QuestionController {
         List<Question> questionsList = questionService.getPaginatedQuestions(start,Integer.parseInt("4"));
         logger.debug("Question List: " + questionsList);
         List<String> allAnswers = new ArrayList<>();
+        Long lastId = 0l;
         for (Question question:
                 questionsList) {
             allAnswers.add(question.getAnswer());
@@ -156,7 +160,10 @@ public class QuestionController {
                     answer = "d";
             }
             allAnswersAlphabets.add(answer);
+            lastId =question.getId();
         }
+
+        logger.info("Last Id: " + lastId);
 
         model.addAttribute("customersAll", questionsList);
         model.addAttribute("allAnswers", allAnswers);
@@ -169,6 +176,8 @@ public class QuestionController {
     public String getQuestionsPageByTagName(@RequestParam(value = "start", required = false)Integer start, @RequestParam String[] tags, @RequestParam String totalQuestions, @RequestParam String parentTopic, Model model) throws ExecutionException, InterruptedException, IOException {
 
         logger.info("start id: " + start);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
         if (start == null){
             start =0;
         }
@@ -180,11 +189,29 @@ public class QuestionController {
         List<Question> questionsList = questionService.getPaginatedQuestionsByTagNames(start, tags, Integer.parseInt("4"));
         logger.debug("Question List: " + questionsList);
         List<String> allAnswers = new ArrayList<>();
+        List<Integer> allLikes = new ArrayList<>();
+        List<Boolean> amILiked = new ArrayList<>();
         for (Question question:
                 questionsList) {
             allAnswers.add(question.getAnswer());
+            if(question.getLikes() == null){
+                allLikes.add(0);
+                amILiked.add(false);
+            }
+            else{
+                List<String> likedUsers = question.getLikes();
+                allLikes.add(question.getLikes().size());
+                if(likedUsers.contains(currentUserName)){
+                    amILiked.add(true);
+                }else {
+                    amILiked.add(false);
+                }
+            }
+
         }
+        logger.info("am I liked: " + amILiked.toString());
         List<String> allAnswersAlphabets = new ArrayList<>();
+        Long lastId = 0l;
         for (Question question:
                 questionsList) {
             String answer = question.getStrAnswer();
@@ -201,17 +228,32 @@ public class QuestionController {
                     answer = "d";
             }
             allAnswersAlphabets.add(answer);
+            lastId = question.getId();
         }
+        logger.info("lastId : " + lastId);
 
 
         int questionsCount = Integer.parseInt(totalQuestions);
+//        List<Long> paginationList = new ArrayList<>();
+//
+//        Long i = 0l;
+//        while(i < questionsList.size()){
+//            paginationList.add(questionsList.get(0).getId());
+//            i += 4;
+//        }
         List<Integer> paginationList = new ArrayList<>();
         int startPage = 0;
-        while(startPage < questionsCount){
-            paginationList.add(startPage);
-            startPage += 4;
+         while(startPage < questionsCount){
+                  paginationList.add(startPage);
+                  startPage += 4;
+         }
+
+        if (lastId == null){
+            lastId = 1l;
         }
 
+        logger.info("Total Question available: "+ questionsList.size());
+        logger.info("paginationList: "+ paginationList);
         model.addAttribute("customersAll", questionsList);
         model.addAttribute("allAnswers", allAnswers);
         model.addAttribute("allAnswersAlphabets", allAnswersAlphabets);
@@ -219,6 +261,9 @@ public class QuestionController {
         model.addAttribute("tagsList", tags[0]);
         model.addAttribute("questionsCount", questionsCount);
         model.addAttribute("parentTopic", parentTopic.length()<=5 ?parentTopic: getShortName(parentTopic));
+        model.addAttribute("allLikes", allLikes);
+        model.addAttribute("amILiked", amILiked);
+        model.addAttribute("lastId", lastId);
 
 
         return "getQuestionsPage";

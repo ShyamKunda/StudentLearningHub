@@ -13,18 +13,17 @@
 
 
     <title>LearnHacks</title>
-<!--    <script src="https://kit.fontawesome.com/8a02b9f577.js" crossorigin="anonymous"></script>-->
+    <!--    <script src="https://kit.fontawesome.com/8a02b9f577.js" crossorigin="anonymous"></script>-->
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async
             src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
     </script>
-
-    <style type="text/css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
         /*
-   * Basic button style
-   */
+     * Basic button style
+     */
         .btn_like {
             box-shadow: 1px 1px 0 rgba(255,255,255,0.5) inset;
             border-radius: 3px;
@@ -98,59 +97,42 @@
             text-shadow: 0 1px 0 rgba(255,255,255,0.3);
         }
 
-        .btn-circle.btn-sm {
-            width: 35px;
-            height: 35px;
-            padding: 0px 5px;
-            border-radius: 9px;
-            font-size: 25px;
-            text-align: center;
-        }
-
-        .feather {
-            width: 24px;
-            height: 24px;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            fill: none;
-        }
 
     </style>
+
 
 </head>
 
 <body>
 <div class="container">
     <nav class="navbar navbar-light bg-dark">
-    <a class="navbar-brand text-light" href="/">
-        LearnHacks
-    </a>
-    <!--		<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>-->
+        <a class="navbar-brand text-light" href="/">
+            LearnHacks
+        </a>
+        <!--		<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>-->
 
-    <!--		<div class="col" sec:authorize="hasRole('ROLE_USER')">-->
-    <!--			<form action="#" th:action="@{/getQuestionPage}" method="get">-->
-    <!--				<button type="submit"  value="Logout" class="btn btn-light">Upload question</button>-->
-    <!--			</form>-->
-    <!--		</div>-->
+        <!--		<div class="col" sec:authorize="hasRole('ROLE_USER')">-->
+        <!--			<form action="#" th:action="@{/getQuestionPage}" method="get">-->
+        <!--				<button type="submit"  value="Logout" class="btn btn-light">Upload question</button>-->
+        <!--			</form>-->
+        <!--		</div>-->
 
-    <div sec:authorize="isAuthenticated()"  class="dropdown pmd-dropdown pmd-user-info ml-auto">
-        <button href="javascript:void(0);" class="btn-user dropdown-toggle media align-items-center bg-light" data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
-            <!--				<img class="mr-2" src="https://pro.propeller.in/assets/images/avatar-icon-40x40.png" width="40" height="40" alt="avatar">-->
-            <div class="media-body">
-                <span  sec:authentication="principal.username">User</span>
-            </div>
-            <i class="material-icons md-light ml-2 pmd-sm"></i>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-            <li class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/getQuestionPage}">Edit Profile</a></li>
-            <li class="dropdown-item" sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/getQuestionPage}">Upload Questions</a></li>
-            <li class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
-        </ul>
-    </div>
+        <div sec:authorize="isAuthenticated()"  class="dropdown pmd-dropdown pmd-user-info ml-auto">
+            <button href="javascript:void(0);" class="btn-user dropdown-toggle media align-items-center bg-light" data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
+                <!--				<img class="mr-2" src="https://pro.propeller.in/assets/images/avatar-icon-40x40.png" width="40" height="40" alt="avatar">-->
+                <div class="media-body">
+                    <span  sec:authentication="principal.username">User</span>
+                </div>
+                <i class="material-icons md-light ml-2 pmd-sm"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/getQuestionPage}">Edit Profile</a></li>
+                <li class="dropdown-item" sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/getQuestionPage}">Upload Questions</a></li>
+                <li class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div>
 
-</nav>
+    </nav>
     <p>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -170,7 +152,7 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item" th:each="page,pageIndex : ${paginationList}">
-                    <a  class="page-link text-info" th:href="@{/getQuestionsPageByTagName(start=${page},tags=${tagsList},totalQuestions=${questionsCount},parentTopic=${parentTopic})}" th:text="${page}">Page No</a>
+                    <a  class="page-link text-info" th:href="@{/getQuestionsPageByTagName(start=${lastId+1},tags=${tagsList},totalQuestions=${questionsCount},parentTopic=${parentTopic})}" th:text="${page}">Page No</a>
                 </li>
             </ul>
         </nav>
@@ -179,60 +161,61 @@
     <div class="container" id="questionsContainer">
 
         <div class="card">
-        <h5 class="card-header" th:text="${tagsList}">tag</h5>
+            <h5 class="card-header" th:text="${tagsList}">tag</h5>
             <div class="card-body">
                 <ol>
-                <div th:each="produto,produtoStat : ${customersAll}"    >
+                    <div th:each="produto,produtoStat : ${customersAll}"    >
                         <li>
-                    <h6 class="card-title"  th:text="${produto.content}" ></h6>
-                    <p>
-<!--                        <form action="/action_page.php">-->
-                    <p>
-                    <div class="form-check" th:each="options,custStat : ${produto.options}">
-                        <label class="form-check-label" th:for="${produtoStat.index} + 'radio' + ${custStat.index}">
-                            <input type="radio" class="form-check-input" th:id="${produtoStat.index} +'radio' + ${custStat.index}" name="optradio"
-                                   th:value="${options}"   th:text="${options}" >
-                        </label>
-                    </div>
-                    </p>
-                    <button class="btn btn-dark btn-sm" type="button"  onclick="validateAnswer(this)" th:id="${produtoStat.index}">
-                        Submit
-                    </button>
+                            <h6 class="card-title"  th:text="${produto.content}" ></h6>
+                            <p>
+                                <!--                        <form action="/action_page.php">-->
+                            <p>
+                            <div class="form-check" th:each="options,custStat : ${produto.options}">
+                                <label class="form-check-label" th:for="${produtoStat.index} + 'radio' + ${custStat.index}">
+                                    <input type="radio" class="form-check-input" th:id="${produtoStat.index} +'radio' + ${custStat.index}" name="optradio"
+                                           th:value="${options}"   th:text="${options}" >
+                                </label>
+                            </div>
+                            </p>
+                            <button class="btn btn-dark btn-sm" type="button"  onclick="validateAnswer(this)" th:id="${produtoStat.index}">
+                                Submit
+                            </button>
 
 
                             <button type="button" class="btn btn-success btn-circle btn-sm" th:id="success+${produtoStat.index}" hidden="true" data-toggle="tooltip" data-placement="top" title="Correct Answer">&#9989;</button>
                             <button type="button" class="btn btn-secondary btn-circle btn-sm" th:id="fail+${produtoStat.index}" hidden="true" data-toggle="tooltip" data-placement="top" title="Wrong Answer">&#10060;</button>
-                    </p>
+                            </p>
                             <div>
-                                <a title="Love it" th:id="likeButton+${produtoStat.index}" th:name="${produto.id}"  onclick="incrementCount(this)" class="btn_like btn_like-counter" data-count="0"><span>&#x2764;</span></a>
-                                </p>
+                                <a title="Flag it" th:id="likeButton+${produtoStat.index}" th:name="${produto.id}" class="btn_like btn_like-counter" th:data-count="${allLikes[produtoStat.index]}"><span>&#x2764;</span> Love it</a>
+                                <!--                                    <a title="Love it" th:id="likeButton+${produtoStat.index}" th:name="${produto.id}"  onclick="incrementCount(this)" class="btn_like btn_like-counter" data-count="0"><span>&#x2764;</span></a>-->
+
                             </div>
                             <p></p>
 
-                    <div th:id="'viewAnswerdiv' + ${produtoStat.index}">
-                        <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:id="'viewAnswer' + ${produtoStat.index}"
-                                th:data-target="'#collapseExample' + ${produtoStat.index}" aria-expanded="false" th:aria-controls="'collapseExample' + ${produtoStat.index}" disabled>
-                            Show Answer
-                        </button>
-                    </div>
+                            <div th:id="'viewAnswerdiv' + ${produtoStat.index}">
+                                <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:id="'viewAnswer' + ${produtoStat.index}"
+                                        th:data-target="'#collapseExample' + ${produtoStat.index}" aria-expanded="false" th:aria-controls="'collapseExample' + ${produtoStat.index}" disabled>
+                                    Show Answer
+                                </button>
+                            </div>
                             <p></p>
-                    <div class="collapse" th:id="'collapseExample'+ ${produtoStat.index}">
-                        <div class="card card-body">
-                            <h5 class="card-title" th:text="'Answer:'+${produto.strAnswer}"></h5>
-                            <h5 class="card-title">Explaination</h5>
-                            <p th:text="${produto.explanation}"></p>
-                        </div>
-<!--                        <div><p>-->
-<!--                            When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are-->
-<!--                            \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]s-->
-<!--                        </p></div>-->
-                    </div>
+                            <div class="collapse" th:id="'collapseExample'+ ${produtoStat.index}">
+                                <div class="card card-body">
+                                    <h5 class="card-title" th:text="'Answer:'+${produto.strAnswer}"></h5>
+                                    <h5 class="card-title">Explaination</h5>
+                                    <p th:text="${produto.explanation}"></p>
+                                </div>
+                                <!--                        <div><p>-->
+                                <!--                            When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are-->
+                                <!--                            \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]s-->
+                                <!--                        </p></div>-->
+                            </div>
                         </li>
 
-                </div>
+                    </div>
                 </ol>
             </div>
-    </div>
+        </div>
 
 
     </div>
@@ -276,53 +259,66 @@
 
 <script th:inline="javascript">
 
-    var firstTime = true;
-    var secondTime = false;
-    var arrOfLikes = {};
+    $( document ).ready(function() {
+        console.log( "ready!" );
+        let amILiked = /*[[${amILiked}]]*/ null;
+        console.log(amILiked);
+        let allQuestionsDetails = /*[[${customersAll}]]*/ null;
+        console.log(allQuestionsDetails);   
+        for(let i=0; i<amILiked.length ;i++){
+            if(amILiked[i]){
+                $("#likeButton" + i).addClass("active");
+            }
+        }
+    });
+</script>
 
-    function incrementCount(elem) {
 
-        console.log("questionId from name : " +  elem.name);
-           console.log(elem.id)
-        if(!arrOfLikes[elem.id]){
-            arrOfLikes[elem.id] = 1;
-            console.log("liked");
-            console.log(elem.getAttribute("data-count"));
-            elem.setAttribute("data-count", parseInt(elem.getAttribute("data-count")) + 1)
-                console.log($(location).attr('host'));
-                let likeUrl = "http://" +  $(location).attr('host') + "/addLike"
-                    $.ajax({
-                        url: likeUrl,
-                        type: "get",
-                        data: {
-                            id: elem.name
-                        },
-                        success: function(result) {
-                           console.log(result)
-                        }});
+<script>
+    /*
+ * Love button for Design it & Code it
+ * http://designitcodeit.com/i/9
+ */
+    $('.btn_like-counter').on('click', function(event, count) {
+        event.preventDefault();
+        var $this = $(this),
+            count = $this.attr('data-count'),
+            active = $this.hasClass('active'),
+            multiple = $this.hasClass('multiple-count');
+        console.log("active: " + active);
+        console.log("multiple: " + multiple);
+        $.fn.noop = $.noop;
+        $this.attr('data-count', ! active || multiple ? ++count : --count  )[multiple ? 'noop' : 'toggleClass']('active');
 
-        } else {
+        if(!active){
+            console.log($(location).attr('host'));
+            let likeUrl = "http://" +  $(location).attr('host') + "/addLike"
+            $.ajax({
+                url: likeUrl,
+                type: "get",
+                data: {
+                    id: $this.attr('name')
+                },
+                success: function(result) {
+                    console.log(result)
+                }});
+        }else{
             console.log("unliked");
-            delete arrOfLikes[elem.id];
-            console.log(elem.getAttribute("data-count"));
-            elem.setAttribute("data-count", parseInt(elem.getAttribute("data-count")) - 1)
+            console.log(count);
             let unlikeUrl = "http://" +  $(location).attr('host') + "/removeLike";
             $.ajax({
                 url: unlikeUrl,
                 type: "get",
                 data: {
-                    id: elem.name
+                    id: $this.attr('name')
                 },
                 success: function(result) {
                     console.log(result)
                 }});
+
         }
-    }
 
-    function setIsClicked() {
-        isLiked = !isLiked;
-    }
-
+    });
 </script>
 
 
@@ -333,8 +329,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-<script type="text/javascript"
-        th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
+<!--<script type="text/javascript"-->
+<!--        th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>-->
+
+
 <script type="text/javascript"
         th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
 

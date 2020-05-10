@@ -230,6 +230,7 @@ public class QuestionService {
             List<String> optionsList = (List<String>) userData.get("options");
 
 
+
             Question question = Question.builder()
                     .id(Long.parseLong(userData.get("id").toString()))
                     .author(userData.get("author").toString())
@@ -238,6 +239,7 @@ public class QuestionService {
                     .content(userData.get("content").toString())
                     .answer(userData.get("answer").toString())
                     .options(optionsList)
+                    .likes((List<String>)userData.get("likes"))
                     .explanation(userData.get("explanation").toString())
                     .strAnswer(userData.get("strAnswer").toString())
                     .build();
