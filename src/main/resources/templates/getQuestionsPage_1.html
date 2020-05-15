@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}"/>
+
+
+    <title>LearnHacks</title>
+<!--    <script src="https://kit.fontawesome.com/8a02b9f577.js" crossorigin="anonymous"></script>-->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+    /*
+ * Basic button style
+ */
+    .btn_like {
+        box-shadow: 1px 1px 0 rgba(255,255,255,0.5) inset;
+        border-radius: 3px;
+        border: 1px solid;
+        display: inline-block;
+        height: 18px;
+        line-height: 18px;
+        padding: 0 8px;
+        position: relative;
+
+        font-size: 12px;
+        text-decoration: none;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    }
+    /*
+     * Counter button style
+     */
+    .btn_like-counter { margin-right: 39px; }
+    .btn_like-counter:after,
+    .btn_like-counter:hover:after { text-shadow: none; }
+    .btn_like-counter:after {
+        border-radius: 3px;
+        border: 1px solid #d3d3d3;
+        background-color: #eee;
+        padding: 0 8px;
+        color: #777;
+        content: attr(data-count);
+        left: 100%;
+        margin-left: 8px;
+        margin-right: -13px;
+        position: absolute;
+        top: -1px;
+    }
+    .btn_like-counter:before {
+        transform: rotate(45deg);
+        filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.7071067811865476, M12=-0.7071067811865475, M21=0.7071067811865475, M22=0.7071067811865476, sizingMethod='auto expand');
+
+        background-color: #eee;
+        border: 1px solid #d3d3d3;
+        border-right: 0;
+        border-top: 0;
+        content: '';
+        position: absolute;
+        right: -13px;
+        top: 5px;
+        height: 6px;
+        width: 6px;
+        z-index: 1;
+        zoom: 1;
+    }
+    /*
+     * Custom styles
+     */
+    .btn_like {
+        background-color: #dbdbdb;
+        border-color: #bbb;
+        color: #666;
+    }
+    .btn_like:hover,
+    .btn_like.active {
+        text-shadow: 0 1px 0 #b12f27;
+        background-color: #f64136;
+        border-color: #b12f27;
+    }
+    .btn_like:active { box-shadow: 0 0 5px 3px rgba(0,0,0,0.2) inset; }
+    .btn_like span { color: #f64136; }
+    .btn_like:hover, .btn_like:hover span,
+    .btn_like.active, .btn_like.active span { color: #eeeeee; }
+    .btn_like:active span {
+        color: #b12f27;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+    }
+
+
+</style>
+
+
+</head>
+
+<body>
+<div class="container">
+    <nav class="navbar navbar-light bg-dark">
+    <a class="navbar-brand text-light" href="/">
+        LearnHacks
+    </a>
+    <!--		<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>-->
+
+    <!--		<div class="col" sec:authorize="hasRole('ROLE_USER')">-->
+    <!--			<form action="#" th:action="@{/getQuestionPage}" method="get">-->
+    <!--				<button type="submit"  value="Logout" class="btn btn-light">Upload question</button>-->
+    <!--			</form>-->
+    <!--		</div>-->
+
+    <div sec:authorize="isAuthenticated()"  class="dropdown pmd-dropdown pmd-user-info ml-auto">
+        <button href="javascript:void(0);" class="btn-user dropdown-toggle media align-items-center bg-light" data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
+            <!--				<img class="mr-2" src="https://pro.propeller.in/assets/images/avatar-icon-40x40.png" width="40" height="40" alt="avatar">-->
+            <div class="media-body">
+                <span  sec:authentication="principal.username">User</span>
+            </div>
+            <i class="material-icons md-light ml-2 pmd-sm"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            <li class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/getQuestionPage}">Edit Profile</a></li>
+            <li class="dropdown-item" sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/getQuestionPage}">Upload Questions</a></li>
+            <li class="dropdown-item" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+        </ul>
+    </div>
+
+</nav>
+    <p>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-info" href="/">Home</a></li>
+                <li class="breadcrumb-item active"  aria-current="page" th:text="${parentTopic}">ECE</li>
+                <li class="breadcrumb-item active" aria-current="page" th:text="${tagsList}">Digital Electronics</li>
+            </ol>
+        </nav>
+    </p>
+    <p>
+    <div class="progress bg-dark">
+        <div class="progress-bar bg-info" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
+             aria-valuemax="100">25%</div>
+    </div>
+    </p>
+    <div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:each="page,pageIndex : ${paginationList}">
+                    <a  class="page-link text-info" th:href="@{/getQuestionsPageByTagName(start=${page},tags=${tagsList},totalQuestions=${questionsCount},parentTopic=${parentTopic})}" th:text="${page}">Page No</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="container" id="questionsContainer">
+
+        <div class="card">
+        <h5 class="card-header" th:text="${tagsList}">tag</h5>
+            <div class="card-body">
+                <ol>
+                <div th:each="produto,produtoStat : ${customersAll}"    >
+                        <li>
+                    <h6 class="card-title"  th:text="${produto.content}" ></h6>
+                    <p>
+<!--                        <form action="/action_page.php">-->
+                    <p>
+                    <div class="form-check" th:each="options,custStat : ${produto.options}">
+                        <label class="form-check-label" th:for="${produtoStat.index} + 'radio' + ${custStat.index}">
+                            <input type="radio" class="form-check-input" th:id="${produtoStat.index} +'radio' + ${custStat.index}" name="optradio"
+                                   th:value="${options}"   th:text="${options}" >
+                        </label>
+                    </div>
+                    </p>
+                    <button class="btn btn-dark btn-sm" type="button"  onclick="validateAnswer(this)" th:id="${produtoStat.index}">
+                        Submit
+                    </button>
+
+
+                            <button type="button" class="btn btn-success btn-circle btn-sm" th:id="success+${produtoStat.index}" hidden="true" data-toggle="tooltip" data-placement="top" title="Correct Answer">&#9989;</button>
+                            <button type="button" class="btn btn-secondary btn-circle btn-sm" th:id="fail+${produtoStat.index}" hidden="true" data-toggle="tooltip" data-placement="top" title="Wrong Answer">&#10060;</button>
+                    </p>
+                            <div>
+                                    <a title="Love it" th:id="likeButton+${produtoStat.index}" th:name="${produto.id}" class="btn_like btn_like-counter" data-count="0"><span>&#x2764;</span> Love it</a>
+<!--                                    <a title="Love it" th:id="likeButton+${produtoStat.index}" th:name="${produto.id}"  onclick="incrementCount(this)" class="btn_like btn_like-counter" data-count="0"><span>&#x2764;</span></a>-->
+
+                            </div>
+                            <p></p>
+
+                    <div th:id="'viewAnswerdiv' + ${produtoStat.index}">
+                        <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" th:id="'viewAnswer' + ${produtoStat.index}"
+                                th:data-target="'#collapseExample' + ${produtoStat.index}" aria-expanded="false" th:aria-controls="'collapseExample' + ${produtoStat.index}" disabled>
+                            Show Answer
+                        </button>
+                    </div>
+                            <p></p>
+                    <div class="collapse" th:id="'collapseExample'+ ${produtoStat.index}">
+                        <div class="card card-body">
+                            <h5 class="card-title" th:text="'Answer:'+${produto.strAnswer}"></h5>
+                            <h5 class="card-title">Explaination</h5>
+                            <p th:text="${produto.explanation}"></p>
+                        </div>
+<!--                        <div><p>-->
+<!--                            When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are-->
+<!--                            \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]s-->
+<!--                        </p></div>-->
+                    </div>
+                        </li>
+
+                </div>
+                </ol>
+            </div>
+    </div>
+
+
+    </div>
+</div>
+<div>
+</div>
+
+<script th:inline="javascript">
+
+    function validateAnswer(elem) {
+
+        let allQuestions = /*[[${allAnswers}]]*/ null;
+        //console.log(allQuestions);
+        let allQuestionsDetails = /*[[${customersAll}]]*/ null;
+        console.log(allQuestionsDetails);
+        // alert(allQuestions[parseInt(elem.id)]);
+
+        console.log("Question Index" + elem.id);
+        let solution = allQuestions[parseInt(elem.id)];
+        console.log("Solution: " + solution);
+        let solutionIndex = solution.replace("option","");
+        let questionIndex = elem.id;
+        console.log("Clicked radio button: " +  questionIndex + "radio"+ solutionIndex);
+
+        let showAnswerId = "#viewAnswer" + questionIndex;
+        console.log(showAnswerId);
+        //document.getElementById(showAnswerId).classList.remove("disabled");
+        $(showAnswerId).removeAttr('disabled');
+
+        let succesBtnId = "success"+questionIndex;
+        let failBtnId = "fail"+questionIndex;
+        if ( document.getElementById( questionIndex + "radio"+ solutionIndex).checked){
+            document.getElementById(failBtnId).hidden = true;
+            document.getElementById(succesBtnId).hidden = false;
+        }else {
+            document.getElementById(succesBtnId).hidden = true;
+            document.getElementById(failBtnId).hidden = false;
+        }
+    }
+</script>
+
+<script th:inline="javascript">
+
+    var firstTime = true;
+    var secondTime = false;
+    var arrOfLikes = {};
+
+    function incrementCount(elem) {
+
+        console.log("questionId from name : " +  elem.name);
+           console.log(elem.id)
+        if(!arrOfLikes[elem.id]){
+            arrOfLikes[elem.id] = 1;
+            console.log("liked");
+            console.log(elem.getAttribute("data-count"));
+            elem.setAttribute("data-count", parseInt(elem.getAttribute("data-count")) + 1)
+                console.log($(location).attr('host'));
+                let likeUrl = "http://" +  $(location).attr('host') + "/addLike"
+                    $.ajax({
+                        url: likeUrl,
+                        type: "get",
+                        data: {
+                            id: elem.name
+                        },
+                        success: function(result) {
+                           console.log(result)
+                        }});
+
+        } else {
+            console.log("unliked");
+            delete arrOfLikes[elem.id];
+            console.log(elem.getAttribute("data-count"));
+            elem.setAttribute("data-count", parseInt(elem.getAttribute("data-count")) - 1)
+            let unlikeUrl = "http://" +  $(location).attr('host') + "/removeLike";
+            $.ajax({
+                url: unlikeUrl,
+                type: "get",
+                data: {
+                    id: elem.name
+                },
+                success: function(result) {
+                    console.log(result)
+                }});
+        }
+    }
+
+    function setIsClicked() {
+        isLiked = !isLiked;
+    }
+
+</script>
+
+<script>
+    /*
+ * Love button for Design it & Code it
+ * http://designitcodeit.com/i/9
+ */
+    $('.btn_like-counter').on('click', function(event, count) {
+        event.preventDefault();
+        var $this = $(this),
+            count = $this.attr('data-count'),
+            active = $this.hasClass('active'),
+            multiple = $this.hasClass('multiple-count');
+            console.log("active: " + active);
+            console.log("multiple: " + multiple);
+        $.fn.noop = $.noop;
+        $this.attr('data-count', ! active || multiple ? ++count : --count  )[multiple ? 'noop' : 'toggleClass']('active');
+
+        if(!active){
+            console.log($(location).attr('host'));
+            let likeUrl = "http://" +  $(location).attr('host') + "/addLike"
+            $.ajax({
+                url: likeUrl,
+                type: "get",
+                data: {
+                    id: $this.attr('name')
+                },
+                success: function(result) {
+                    console.log(result)
+                }});
+        }else{
+            console.log("unliked");
+            console.log(count);
+            elem.setAttribute("data-count", parseInt(elem.getAttribute("data-count")) - 1)
+            let unlikeUrl = "http://" +  $(location).attr('host') + "/removeLike";
+            $.ajax({
+                url: unlikeUrl,
+                type: "get",
+                data: {
+                    id: $this.attr('name')
+                },
+                success: function(result) {
+                    console.log(result)
+                }});
+
+        }
+
+    });
+</script>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<!--<script type="text/javascript"-->
+<!--        th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>-->
+
+
+<script type="text/javascript"
+        th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
